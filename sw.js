@@ -1,6 +1,6 @@
 // Service worker: simpan rangka Portal supaya ia dibuka pantas & boleh dipasang sebagai app.
 // Naikkan VERSI setiap kali index.html dikemas kini supaya telefon pengguna dapat versi baharu.
-const VERSI = 'portal-icc-v4';
+const VERSI = 'icc-nexus-v5';
 const FAIL = [
   './',
   './index.html',
@@ -9,7 +9,8 @@ const FAIL = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
-  './icons/favicon-32.png'
+  './icons/favicon-32.png',
+  './icons/logo.svg'
 ];
 
 self.addEventListener('install', e => {

@@ -1,12 +1,12 @@
-# Portal ICC
+# ICC NEXUS — Digital Ecosystem
 
-Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset** dan **e-LogKenderaan**).
+**One platform. Every system.** Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset** dan **e-LogKenderaan**).
 Portal ini ialah **PWA (Progressive Web App)**, jadi ia boleh di-*install* di Android, iPhone dan komputer tanpa melalui Play Store atau App Store. Ia dihoskan secara percuma di **GitHub Pages**.
 
 ## Cara ia berfungsi
 
 ```
-Telefon / PC ──► Portal ICC (GitHub Pages)
+Telefon / PC ──► ICC NEXUS (GitHub Pages)
                     ├─► e-PinjamAset    ┐ Google sahkan akaun @uthm.edu.my
                     └─► e-LogKenderaan  ┘ Setiap sistem semak senarai pengguna & peranannya sendiri
 ```

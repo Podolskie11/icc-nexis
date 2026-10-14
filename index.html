@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Portal ICC</title>
-<meta name="description" content="Pintu masuk sistem dalaman warga ICC, UTHM">
+<title>ICC NEXUS · Digital Ecosystem</title>
+<meta name="description" content="ICC NEXUS — One platform. Every system. Ekosistem digital warga ICC, UTHM.">
 <meta name="theme-color" content="#14213d">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icons/favicon-32.png" type="image/png">
+<link rel="icon" href="icons/logo.svg" type="image/svg+xml">
+<link rel="alternate icon" href="icons/favicon-32.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Portal ICC">
+<meta name="apple-mobile-web-app-title" content="ICC NEXUS">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +45,7 @@
     ['🔔', 'Tekan ikon <b>loceng</b> dalam e-PinjamAset untuk lihat status permohonan anda — tiada lagi emel bertimbun.'],
     ['⌨️', 'Di komputer, tekan kekunci <b>1</b> atau <b>2</b> untuk terus membuka sistem.'],
     ['🖨️', 'Penyelia boleh <b>Jana Borang</b> log kenderaan bulanan — siap untuk dicetak dalam format A4.'],
-    ['📱', 'Pasang Portal ICC di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
+    ['📱', 'Pasang ICC NEXUS di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
     ['⛽', 'Isi bacaan <b>odometer</b> — e-LogKenderaan akan cadangkan jarak perjalanan secara automatik.'],
     ['🔐', 'Hanya akaun <b>@uthm.edu.my</b> yang berdaftar boleh masuk. Kali pertama? Tekan <b>Mohon akses</b>.']
   ];
@@ -57,7 +58,8 @@
 :root {
   --navy: #14213d;
   --navy-2: #1d2f57;
-  --amber: #fca311;
+  --amber: #2dd4bf; /* aksen jenama ICC NEXUS (teal) */
+  --biru: #0b95f0;
   --latar: #f4f6fb;
   --permukaan: #ffffff;
   --permukaan-2: #f7f8fc;
@@ -114,19 +116,21 @@ button { font: inherit; }
   -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%);
 }
 .gumpal { position: absolute; border-radius: 50%; filter: blur(40px); z-index: -1; pointer-events: none; }
-.gumpal.a { width: 320px; height: 320px; right: -90px; top: -110px; background: rgba(252,163,17,.30); animation: hanyut 14s ease-in-out infinite alternate; }
-.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(52,84,209,.45); animation: hanyut 18s ease-in-out infinite alternate-reverse; }
+.gumpal.a { width: 320px; height: 320px; right: -90px; top: -110px; background: rgba(34,199,169,.30); animation: hanyut 14s ease-in-out infinite alternate; }
+.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(11,149,240,.45); animation: hanyut 18s ease-in-out infinite alternate-reverse; }
 @keyframes hanyut { from { transform: translate(0, 0) scale(1); } to { transform: translate(-40px, 30px) scale(1.15); } }
 /* Simbol hub besar berputar perlahan */
-.hub-hiasan { position: absolute; right: -40px; bottom: -70px; width: 300px; height: 300px; z-index: -1; opacity: .09; animation: putar 60s linear infinite; pointer-events: none; }
+.hub-hiasan { position: absolute; right: -30px; bottom: -60px; width: 300px; height: 300px; z-index: -1; opacity: .12; animation: apung 9s ease-in-out infinite; pointer-events: none; }
 @keyframes putar { to { transform: rotate(360deg); } }
+@keyframes apung { 0%, 100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-14px) rotate(4deg); } }
 
 .kepala-dalam { max-width: 820px; margin: 0 auto; }
 .bar-atas { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
 .jenama { display: flex; align-items: center; gap: 12px; margin-right: auto; min-width: 0; }
-.jenama img { width: 40px; height: 40px; border-radius: 11px; animation: denyut 3.5s ease-in-out infinite; }
-@keyframes denyut { 0%, 100% { box-shadow: 0 0 0 0 rgba(252,163,17,.0); } 50% { box-shadow: 0 0 0 6px rgba(252,163,17,.18); } }
-.jenama b { font-size: 18px; font-weight: 800; letter-spacing: -.2px; }
+.jenama img { width: 42px; height: 42px; padding: 4px; background: #fff; border-radius: 12px; animation: denyut 3.5s ease-in-out infinite; }
+@keyframes denyut { 0%, 100% { box-shadow: 0 0 0 0 rgba(34,199,169,.0); } 50% { box-shadow: 0 0 0 6px rgba(34,199,169,.18); } }
+.jenama b { font-size: 18px; font-weight: 800; letter-spacing: .6px; }
+.jenama b .nexus { display: inline; font-size: inherit; color: #7ee8d6; font-weight: 800; }
 .jenama span { display: block; font-size: 12px; color: #b9c3dd; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cip {
   display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border-radius: 999px;
@@ -144,14 +148,14 @@ button.cip:active { transform: scale(.92); }
 .salam .emoji { display: inline-block; animation: lambai 2.2s ease-in-out 1s 2; transform-origin: 70% 70%; }
 @keyframes lambai { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(14deg); } 20%, 40% { transform: rotate(-8deg); } }
 .btn-nama {
-  background: none; border: 1px dashed rgba(252,163,17,.5); color: var(--amber); border-radius: 999px;
+  background: none; border: 1px dashed rgba(34,199,169,.5); color: var(--amber); border-radius: 999px;
   padding: 1px 10px; font-size: 12.5px; font-weight: 700; cursor: pointer;
 }
-.btn-nama:hover { background: rgba(252,163,17,.12); }
+.btn-nama:hover { background: rgba(34,199,169,.12); }
 .nama-saya { cursor: pointer; border-bottom: 1px dashed transparent; }
 .nama-saya:hover { border-bottom-color: currentColor; }
 .kepala h1 { font-size: 28px; font-weight: 800; letter-spacing: -.5px; line-height: 1.2; }
-.kepala h1 .serlah { background: linear-gradient(90deg, #fff, #fcd27a, #fff); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: kilau 6s linear infinite; }
+.kepala h1 .serlah { background: linear-gradient(90deg, #fff, #7ee8d6, #8fd0ff, #fff); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: kilau 6s linear infinite; }
 @keyframes kilau { to { background-position: -200% 0; } }
 .kepala p { color: #b9c3dd; margin-top: 8px; font-size: 14.5px; }
 .tarikh { color: #b9c3dd; font-size: 13px; font-weight: 600; margin-top: 14px; display: flex; align-items: center; gap: 6px; }
@@ -269,7 +273,7 @@ kbd {
 .tutorial-kad:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--amber) 55%, var(--garis)); }
 .tutorial-kad h3 { margin: 0; }
 .tutorial-kad p { margin-top: 2px; }
-.tutorial-ikon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 20px; color: #fff; background: linear-gradient(135deg, #fca311, #e8590c); box-shadow: 0 6px 16px rgba(252,163,17,.35); padding-left: 3px; }
+.tutorial-ikon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 20px; color: #fff; background: linear-gradient(135deg, #0b95f0, #22c7a9); box-shadow: 0 6px 16px rgba(34,199,169,.35); padding-left: 3px; }
 .tutorial-kad:hover .tutorial-ikon { animation: lompat .5s ease; }
 .panah-tutorial { color: var(--teks-2); transition: transform .2s; }
 .tutorial-kad:hover .panah-tutorial { transform: translateX(3px); }
@@ -280,7 +284,7 @@ kbd {
   font-weight: 700; font-size: 14.5px; background: var(--btn-latar); color: var(--btn-teks);
   transition: transform .15s, box-shadow .15s;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(252,163,17,.3); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,199,169,.3); }
 
 details summary { cursor: pointer; list-style: none; }
 details summary::-webkit-details-marker { display: none; }
@@ -318,17 +322,15 @@ a.kad-sistem:hover .buka { gap: 10px; }
 <header class="kepala">
   <span class="gumpal a"></span><span class="gumpal b"></span>
   <svg class="hub-hiasan" viewBox="0 0 100 100" aria-hidden="true">
-    <g fill="#fca311" stroke="#fca311" stroke-width="4.4">
-      <line x1="50" y1="52" x2="50" y2="28"/><line x1="50" y1="52" x2="70.8" y2="64"/><line x1="50" y1="52" x2="29.2" y2="64"/>
-      <circle cx="50" cy="52" r="10.5" stroke="none"/><circle cx="50" cy="28" r="7" stroke="none"/>
-      <circle cx="70.8" cy="64" r="7" stroke="none"/><circle cx="29.2" cy="64" r="7" stroke="none"/>
-    </g>
+    <path d="M26 84V24c0-6 7-8 10-3l28 47c3 5 10 3 10-3V16" fill="none" stroke="#0b95f0" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <g stroke="#22c7a9" stroke-width="5" stroke-linecap="round"><path d="M37 38 63 64"/><path d="M37 64 63 38"/></g>
+    <g fill="#22c7a9"><circle cx="37" cy="38" r="5"/><circle cx="63" cy="38" r="5"/><circle cx="37" cy="64" r="5"/></g>
   </svg>
   <div class="kepala-dalam">
     <div class="bar-atas">
       <div class="jenama">
-        <img src="icons/icon-192.png" alt="">
-        <div style="min-width:0"><b>Portal ICC</b><span>Universiti Tun Hussein Onn Malaysia</span></div>
+        <img src="icons/logo.svg" alt="Logo ICC NEXUS">
+        <div style="min-width:0"><b>ICC <span class="nexus">NEXUS</span></b><span>Digital Ecosystem · UTHM</span></div>
       </div>
       <span class="cip luar" id="cip-luar" hidden title="Tiada sambungan internet">
         <svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l20 20M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 5.2-2.8M19 13a10 10 0 0 0-2-1.5M2 8.8a15 15 0 0 1 4.2-2.7M22 8.8A15 15 0 0 0 10.7 5M12 20h.01"/></svg>Luar talian
@@ -337,8 +339,8 @@ a.kad-sistem:hover .buka { gap: 10px; }
       <button class="cip" id="btn-tema" type="button" aria-label="Tukar tema" title="Tukar tema cerah / gelap"></button>
     </div>
     <div class="salam" id="salam"></div>
-    <h1>Sistem dalaman <span class="serlah">warga ICC</span></h1>
-    <p>Pilih sistem di bawah. Log masuk menggunakan akaun Google <b style="color:#fff">@uthm.edu.my</b> anda.</p>
+    <h1>One platform. <span class="serlah">Every system.</span></h1>
+    <p>Ekosistem digital warga ICC — semua sistem dalam satu tempat. Log masuk menggunakan akaun Google <b style="color:#fff">@uthm.edu.my</b> anda.</p>
     <div class="tarikh" id="tarikh"></div>
   </div>
 </header>
@@ -374,7 +376,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
   <section class="kad muncul" style="--i:6" id="kad-pasang" hidden>
     <h3><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Pasang di telefon</h3>
     <div id="pasang-android" hidden>
-      <p>Pasang Portal ICC sebagai aplikasi supaya ia sentiasa ada di skrin utama telefon anda.</p>
+      <p>Pasang ICC NEXUS sebagai aplikasi supaya ia sentiasa ada di skrin utama telefon anda.</p>
       <button class="btn" id="btn-pasang">Pasang aplikasi</button>
     </div>
     <div id="pasang-ios" hidden>
@@ -403,7 +405,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
     </ol>
   </details>
 
-  <footer class="muncul" style="--i:8">Portal ICC · UTHM<span id="nota-kekunci"></span></footer>
+  <footer class="muncul" style="--i:8">ICC NEXUS · Digital Ecosystem · UTHM<span id="nota-kekunci"></span></footer>
 </main>
 
 <script>
