@@ -1,19 +1,21 @@
 # ICC NEXUS — Digital Ecosystem
 
-**One platform. Every system.** Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset** dan **e-LogKenderaan**).
+**One platform. Every system.** Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset**, **e-LogKenderaan** dan **e-TempahanRuang**).
 Portal ini ialah **PWA (Progressive Web App)**, jadi ia boleh di-*install* di Android, iPhone dan komputer tanpa melalui Play Store atau App Store. Ia dihoskan secara percuma di **GitHub Pages**.
 
 ## Cara ia berfungsi
 
 ```
 Telefon / PC ──► ICC NEXUS (GitHub Pages)
-                    ├─► e-PinjamAset    ┐ Google sahkan akaun @uthm.edu.my
-                    └─► e-LogKenderaan  ┘ Setiap sistem semak senarai pengguna & peranannya sendiri
+                    ├─► e-PinjamAset     ┐ Google sahkan akaun @uthm.edu.my
+                    ├─► e-LogKenderaan   │ Setiap sistem semak senarai pengguna & peranannya sendiri
+                    └─► e-TempahanRuang  ┘
 ```
 
 - Portal hanya mengandungi **pautan**. Ia tidak menyimpan data atau kata laluan.
 - Keselamatan dikawal oleh **setiap sistem**: login Google UTHM, senarai pengguna dan peranan masing-masing.
-- Bila pengguna dah log masuk Google UTHM, mereka akan dikenali secara automatik di kedua-dua sistem.
+- Bila pengguna dah log masuk Google UTHM, mereka akan dikenali secara automatik di semua sistem.
+- **Tutorial video** (`tutorial.html`) disimpan dalam folder `tutorial/`. Setiap video mempunyai `.mp4`, `.jpg` (gambar kecil) dan `.json` (langkah). Video e-TempahanRuang: `ruang-1-tempah`, `ruang-2-jadual`, `ruang-3-pelulus`, `ruang-4-admin`.
 
 ## Fail
 

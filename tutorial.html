@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tutorial Video · ICC NEXUS</title>
-<meta name="description" content="Tutorial video cara menggunakan e-LogKenderaan dan e-PinjamAset">
+<meta name="description" content="Tutorial video cara menggunakan e-LogKenderaan, e-PinjamAset dan e-TempahanRuang">
 <meta name="theme-color" content="#14213d">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/logo.svg" type="image/svg+xml">
@@ -36,6 +36,15 @@
         { id: 'aset-3-pegawai', tajuk: 'Semak, serah & periksa aset', ket: 'Tugasan Pegawai Aset dari semakan permohonan hingga pemeriksaan pemulangan.', untuk: 'Pegawai Aset', jenis: 'admin' },
         { id: 'aset-4-ketua', tajuk: 'Luluskan permohonan', ket: 'Buat keputusan lulus / tolak berdasarkan semakan Pegawai Aset.', untuk: 'Ketua PTj', jenis: 'admin' },
         { id: 'aset-5-admin', tajuk: 'Daftar aset & urus pengguna', ket: 'Kemas kini katalog aset dan tetapkan peranan staf.', untuk: 'Admin', jenis: 'admin' }
+      ]
+    },
+    ruang: {
+      nama: 'e-TempahanRuang', warna: '#14807a',
+      senarai: [
+        { id: 'ruang-1-tempah', tajuk: 'Tempah ruang', ket: 'Pilih ruang, tarikh & masa. Pertindihan disemak serta-merta, kemudian hantar permohonan.', untuk: 'Semua staf', jenis: 'pengguna' },
+        { id: 'ruang-2-jadual', tajuk: 'Jadual Ruang & batal tempahan', ket: 'Lihat penggunaan semua bilik, tempah terus dari jadual, semak status dan batal tempahan.', untuk: 'Semua staf', jenis: 'pengguna' },
+        { id: 'ruang-3-pelulus', tajuk: 'Luluskan & urus tempahan', ket: 'Lulus atau tolak permohonan, batalkan tempahan dengan sebab dan semak semua rekod.', untuk: 'Pegawai Ruang', jenis: 'admin' },
+        { id: 'ruang-4-admin', tajuk: 'Daftar ruang & urus pengguna', ket: 'Tambah bilik, tukar status penyelenggaraan, tetapkan peranan dan reset PIN staf.', untuk: 'Admin', jenis: 'admin' }
       ]
     }
   };
@@ -85,7 +94,9 @@ button { font: inherit; }
 
 /* ---------- Pilih sistem ---------- */
 main { max-width: 1040px; margin: -52px auto 0; padding: 0 16px calc(36px + env(safe-area-inset-bottom)); position: relative; z-index: 2; }
-.segmen { display: inline-grid; grid-auto-flow: column; gap: 4px; padding: 5px; border-radius: 16px; background: var(--permukaan); border: 1px solid var(--garis); box-shadow: var(--bayang); margin-bottom: 16px; }
+.segmen { display: inline-grid; grid-auto-flow: column; gap: 4px; padding: 5px; border-radius: 16px; background: var(--permukaan); border: 1px solid var(--garis); box-shadow: var(--bayang); margin-bottom: 16px; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.segmen::-webkit-scrollbar { display: none; }
+.segmen button { white-space: nowrap; }
 .segmen button { border: 0; background: none; color: var(--teks-2); font-weight: 700; font-size: 14px; padding: 9px 16px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 .segmen button .titik { width: 9px; height: 9px; border-radius: 50%; background: var(--w); }
 .segmen button.aktif { background: var(--navy); color: #fff; }
@@ -214,6 +225,9 @@ main { max-width: 1040px; margin: -52px auto 0; padding: 0 16px calc(36px + env(
     $('segmen').innerHTML = Object.entries(TUTORIAL).map(([k, s]) =>
       '<button role="tab" data-s="' + k + '" class="' + (k === sistem ? 'aktif' : '') + '" style="--w:' + s.warna + '"><span class="titik"></span>' + esc(s.nama) + '</button>').join('');
     $('segmen').querySelectorAll('button').forEach(b => b.onclick = () => pilih(b.dataset.s, 0));
+    // Skrin kecil: pastikan tab aktif kelihatan
+    const seg = $('segmen'), a = seg.querySelector('.aktif');
+    if (a) seg.scrollLeft = a.offsetLeft - (seg.clientWidth - a.offsetWidth) / 2;
   }
 
   let penapis = 'semua';

@@ -35,6 +35,13 @@
       url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbxI8JzuZugVprR8tcqESpyPNqIRAAfZ6dgAz6C6028u-gx5z5mHbBSUVYT6kJrBId2Nrw/exec',
       warna: '#fca311',
       ikon: '<path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><path d="M5 11h14"/>'
+    },
+    {
+      nama: 'e-TempahanRuang',
+      keterangan: 'Tempah bilik mesyuarat, makmal & ruang ICC',
+      url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbyfsSLJiGp0_AOU5GTJTTQMrPE2PxUtf-3I7F3IfPX7zLrMgMTgCdVhkMLyJidi8RRtJQ/exec',
+      warna: '#14807a',
+      ikon: '<path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M14.5 12h.01"/>'
     }
   ];
   const DOMAIN = 'uthm.edu.my';
@@ -43,7 +50,8 @@
   const TIP = [
     ['📺', 'Baru pertama kali? Tonton <b>Tutorial video</b> di bahagian Panduan — setiap langkah boleh ditekan.'],
     ['🔔', 'Tekan ikon <b>loceng</b> dalam e-PinjamAset untuk lihat status permohonan anda — tiada lagi emel bertimbun.'],
-    ['⌨️', 'Di komputer, tekan kekunci <b>1</b> atau <b>2</b> untuk terus membuka sistem.'],
+    ['⌨️', 'Di komputer, tekan kekunci <b>1</b>, <b>2</b> atau <b>3</b> untuk terus membuka sistem.'],
+    ['🗓️', 'Buka <b>Jadual Ruang</b> dalam e-TempahanRuang dan klik slot kosong untuk terus menempah bilik.'],
     ['🖨️', 'Penyelia boleh <b>Jana Borang</b> log kenderaan bulanan — siap untuk dicetak dalam format A4.'],
     ['📱', 'Pasang ICC NEXUS di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
     ['⛽', 'Isi bacaan <b>odometer</b> — e-LogKenderaan akan cadangkan jarak perjalanan secara automatik.'],
@@ -301,6 +309,11 @@ footer kbd { display: inline-block; position: static; height: 20px; min-width: 2
   .kepala { padding-top: 32px; padding-bottom: 108px; }
   .kepala h1 { font-size: 36px; }
   .senarai-sistem { grid-template-columns: 1fr 1fr; gap: 18px; }
+}
+@media (min-width: 960px) {
+  .senarai-sistem { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 720px) {
   .kad-sistem { grid-template-columns: 1fr; align-content: start; gap: 16px; padding: 24px; min-height: 220px; }
   .kad-sistem .anak-panah { display: none; }
   .kad-sistem .buka { display: inline-flex; }
@@ -369,7 +382,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
 
   <a class="kad tutorial-kad muncul" style="--i:5" href="tutorial.html">
     <span class="tutorial-ikon">▶</span>
-    <span><h3>Tutorial video</h3><p>Tonton cara guna e-LogKenderaan & e-PinjamAset langkah demi langkah sebelum mula.</p></span>
+    <span><h3>Tutorial video</h3><p>Tonton cara guna e-LogKenderaan, e-PinjamAset & e-TempahanRuang langkah demi langkah sebelum mula.</p></span>
     <svg class="ikon panah-tutorial" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
   </a>
 
