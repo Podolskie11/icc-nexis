@@ -1,0 +1,40 @@
+{
+ "saat": 62,
+ "bab": [
+  {
+   "no": 1,
+   "teks": "Akaun Google UTHM anda dikesan. Masukkan PIN dan tekan Log Masuk.",
+   "t": 0
+  },
+  {
+   "no": 2,
+   "teks": "\"Senarai Ruang\" memaparkan semua bilik bersama kapasiti dan statusnya.",
+   "t": 5.9
+  },
+  {
+   "no": 3,
+   "teks": "Tekan \"Daftar ruang\" dan isi nama, jenis, lokasi, kapasiti serta kemudahan.",
+   "t": 10.1
+  },
+  {
+   "no": 4,
+   "teks": "Bilik rosak atau dalam penyelenggaraan? Tukar statusnya supaya ruang itu tidak boleh ditempah.",
+   "t": 27
+  },
+  {
+   "no": 5,
+   "teks": "Di tab \"Pengguna\", tetapkan peranan staf. Contohnya, beri peranan Pegawai Ruang kepada pelulus.",
+   "t": 40.2
+  },
+  {
+   "no": 6,
+   "teks": "Staf terlupa PIN? Isi PIN baharu di \"Set semula PIN\", kemudian simpan.",
+   "t": 47.9
+  },
+  {
+   "no": 7,
+   "teks": "Tukar PIN admin anda sendiri di \"Profil Saya\". Lakukannya selepas log masuk kali pertama.",
+   "t": 53.8
+  }
+ ]
+}

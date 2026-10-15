@@ -1,0 +1,50 @@
+{
+ "saat": 50,
+ "bab": [
+  {
+   "no": 1,
+   "teks": "Akaun Google UTHM anda dikesan. Masukkan PIN dan tekan Log Masuk.",
+   "t": 0
+  },
+  {
+   "no": 2,
+   "teks": "Buka \"Jadual Ruang\" untuk melihat penggunaan semua bilik hari ini.",
+   "t": 5.9
+  },
+  {
+   "no": 3,
+   "teks": "Hijau = diluluskan, berjalur jingga = menunggu kelulusan, bingkai kuning = tempahan anda. Garis merah = masa sekarang.",
+   "t": 9.7
+  },
+  {
+   "no": 4,
+   "teks": "Tukar hari dengan butang anak panah, atau pilih tarikh.",
+   "t": 15.1
+  },
+  {
+   "no": 5,
+   "teks": "Klik pada slot kosong untuk terus menempah. Ruang, tarikh dan masa diisi secara automatik.",
+   "t": 18.8
+  },
+  {
+   "no": 6,
+   "teks": "\"Tempahan Saya\" memaparkan status setiap permohonan anda.",
+   "t": 26.3
+  },
+  {
+   "no": 7,
+   "teks": "Tekan sesuatu tempahan untuk melihat butiran dan log aktiviti.",
+   "t": 30.4
+  },
+  {
+   "no": 8,
+   "teks": "Tidak jadi? Tekan Batal. Slot itu akan dibuka semula untuk orang lain.",
+   "t": 35.2
+  },
+  {
+   "no": 9,
+   "teks": "Loceng 🔔 memaparkan keputusan Pegawai Ruang. Keputusan juga dihantar melalui emel.",
+   "t": 43.9
+  }
+ ]
+}

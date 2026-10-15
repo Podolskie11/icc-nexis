@@ -1,0 +1,55 @@
+{
+ "saat": 63,
+ "bab": [
+  {
+   "no": 1,
+   "teks": "Akaun Google UTHM anda dikesan. Masukkan PIN dan tekan Log Masuk.",
+   "t": 0
+  },
+  {
+   "no": 2,
+   "teks": "Papan Utama memaparkan tempahan anda dan penggunaan ruang hari ini. Tekan \"Tempah Ruang\".",
+   "t": 5.9
+  },
+  {
+   "no": 3,
+   "teks": "Pilih ruang. Setiap kad memaparkan kapasiti, lokasi dan kemudahan.",
+   "t": 12.1
+  },
+  {
+   "no": 4,
+   "teks": "Pilih tarikh pada kalendar (klik tarikh yang sama sekali lagi untuk 1 hari). Titik jingga = sudah ada tempahan.",
+   "t": 17.7
+  },
+  {
+   "no": 5,
+   "teks": "Pilih masa mula dan tamat. Garis masa di bawah menunjukkan slot yang sudah diambil.",
+   "t": 23.3
+  },
+  {
+   "no": 6,
+   "teks": "Bertindih dengan tempahan lain? Sistem memberitahu serta-merta. Pilih masa lain, contohnya \"Petang\".",
+   "t": 31.1
+  },
+  {
+   "no": 7,
+   "teks": "Ruang kosong pada masa itu. Tekan Seterusnya.",
+   "t": 37.8
+  },
+  {
+   "no": 8,
+   "teks": "Nyatakan tujuan, bilangan peserta dan keperluan tambahan.",
+   "t": 41
+  },
+  {
+   "no": 9,
+   "teks": "Semak ringkasan di sebelah kanan, kemudian tekan \"Hantar permohonan\".",
+   "t": 51.7
+  },
+  {
+   "no": 10,
+   "teks": "Permohonan dihantar! Slot dipegang untuk anda sementara menunggu kelulusan Pegawai Ruang.",
+   "t": 58
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "saat": 69,
+ "bab": [
+  {
+   "no": 1,
+   "teks": "Akaun Google UTHM anda dikesan. Masukkan PIN dan tekan Log Masuk.",
+   "t": 0
+  },
+  {
+   "no": 2,
+   "teks": "Papan Utama memaparkan bilangan permohonan yang menunggu kelulusan anda.",
+   "t": 5.9
+  },
+  {
+   "no": 3,
+   "teks": "Buka \"Kelulusan\". Permohonan disusun mengikut tarikh penggunaan.",
+   "t": 9.5
+  },
+  {
+   "no": 4,
+   "teks": "Tekan \"Buat keputusan\", semak butiran, pilih Luluskan dan sahkan.",
+   "t": 13.7
+  },
+  {
+   "no": 5,
+   "teks": "Jika tidak diluluskan, sebab wajib diisi. Pemohon dimaklumkan melalui emel.",
+   "t": 24.7
+  },
+  {
+   "no": 6,
+   "teks": "Tab \"Hari ini\" dan \"Akan datang\" memaparkan tempahan yang sudah diluluskan.",
+   "t": 37.6
+  },
+  {
+   "no": 7,
+   "teks": "Ruang diperlukan untuk urusan rasmi? Batalkan tempahan dengan sebab. Pemohon akan dimaklumkan.",
+   "t": 43.8
+  },
+  {
+   "no": 8,
+   "teks": "\"Jadual Ruang\" memaparkan semua tempahan dalam satu paparan.",
+   "t": 54.3
+  },
+  {
+   "no": 9,
+   "teks": "\"Semua Rekod\": cari dan tapis tempahan mengikut ruang atau status.",
+   "t": 59
+  }
+ ]
+}
