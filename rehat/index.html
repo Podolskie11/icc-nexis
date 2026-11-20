@@ -88,6 +88,30 @@ canvas { display: block; width: 100%; aspect-ratio: 3 / 4; max-height: calc(100s
 .btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
 .nota { color: var(--teks-2); font-size: 12.5px; text-align: center; }
 kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(--garis); border-bottom-width: 2px; border-radius: 6px; padding: 2px 5px; background: var(--permukaan-2); }
+/* ---------- Papan markah ---------- */
+.papan-kepala { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.papan-kepala h2 { font: 700 16px/1.3 "Montserrat", sans-serif; margin-right: auto; }
+.pautan { background: none; border: 0; padding: 4px 2px; cursor: pointer; color: var(--hijau); font-weight: 700; font-size: 13px; }
+.papan-saya { color: var(--teks-2); font-size: 13.5px; margin-bottom: 10px; }
+.papan-saya b { color: var(--teks); }
+.borang-nama { display: flex; gap: 8px; margin-bottom: 10px; }
+.borang-nama input { flex: 1; min-width: 0; padding: 0 12px; min-height: 40px; border-radius: 10px; border: 1px solid var(--garis); background: var(--permukaan-2); color: var(--teks); font: inherit; }
+.borang-nama .btn { margin-top: 0; min-height: 40px; padding: 0 16px; font-size: 14px; }
+.senarai-papan { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.senarai-papan li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; font-size: 14px; }
+.senarai-papan li:nth-child(odd) { background: var(--permukaan-2); }
+.senarai-papan li.saya { background: color-mix(in srgb, var(--hijau) 14%, var(--permukaan)); font-weight: 700; }
+.senarai-papan .no { font: 800 13px/1 "Montserrat", sans-serif; color: var(--teks-2); text-align: center; }
+.senarai-papan li:nth-child(-n+3) .no { color: #fff; background: var(--hijau); border-radius: 999px; height: 24px; display: grid; place-items: center; }
+.senarai-papan .nama { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.senarai-papan .mata { font: 800 15px/1 "Montserrat", sans-serif; font-variant-numeric: tabular-nums; }
+.senarai-papan li.papan-kosong { display: block; background: none; color: var(--teks-2); font-size: 13.5px; text-align: center; padding: 14px 0; }
+.ralat { color: var(--bahaya); font-size: 13px; margin-top: 8px; }
+.ajak { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; text-decoration: none; color: inherit; }
+.ajak .bulat { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #169b83, #3cc9a8); }
+.ajak b { display: block; font-size: 14.5px; }
+.ajak span { color: var(--teks-2); font-size: 13px; }
+.kedudukan-akhir { margin-top: 6px; font-weight: 700; color: var(--hijau); font-size: 14px; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
@@ -145,12 +169,36 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
           <div class="skor-akhir" id="skor-akhir">0</div>
           <p id="kertas-akhir"></p>
           <span class="rekod" id="rekod-baru" hidden>Rekod baharu!</span>
+          <p class="kedudukan-akhir" id="kedudukan-akhir" hidden></p>
           <div><button class="btn" id="btn-lagi" type="button">Main lagi</button></div>
         </div>
       </div>
     </div>
   </section>
-  <p class="nota">Telefon: seret jari di padang. Komputer: tetikus atau <span style="white-space:nowrap"><kbd>←</kbd> <kbd>→</kbd></span>, <span style="white-space:nowrap"><kbd>P</kbd> untuk jeda.</span><br>Skor terbaik disimpan dalam peranti ini sahaja.</p>
+
+  <!-- Papan markah: hanya dalam versi Apps Script (log masuk UTHM) -->
+  <section class="kad" id="papan" hidden>
+    <div class="papan-kepala">
+      <h2>Papan Markah UTHM</h2>
+      <button class="pautan" id="btn-nama" type="button">Tukar nama</button>
+    </div>
+    <form class="borang-nama" id="borang-nama" hidden>
+      <input id="input-nama" maxlength="24" autocomplete="nickname" aria-label="Nama paparan" placeholder="Nama paparan">
+      <button class="btn" type="submit">Simpan</button>
+    </form>
+    <p class="papan-saya" id="papan-saya">Memuatkan papan markah…</p>
+    <ol class="senarai-papan" id="senarai-papan"></ol>
+    <p class="ralat" id="papan-ralat" hidden></p>
+  </section>
+
+  <!-- Versi GitHub: ajak ke versi papan markah -->
+  <a class="kad ajak" id="ajak" href="#" target="_blank" rel="noopener" hidden>
+    <span class="bulat" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span>
+    <span><b>Lawan rakan sekerja</b><span>Main versi Papan Markah UTHM (log masuk akaun UTHM).</span></span>
+    <svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </a>
+
+  <p class="nota">Telefon: seret jari di padang. Komputer: tetikus atau <span style="white-space:nowrap"><kbd>←</kbd> <kbd>→</kbd></span>, <span style="white-space:nowrap"><kbd>P</kbd> untuk jeda.</span><br><span id="nota-simpan">Skor terbaik disimpan dalam peranti ini sahaja.</span></p>
 </main>
 
 <script>
@@ -222,7 +270,61 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
   const kekunci = { kiri: false, kanan: false };
   $('terbaik').textContent = terbaik;
 
-  const gandaan = () => Math.min(4, 1 + Math.floor(rentetan / 10));
+  /* ---------- Papan markah (hanya versi Apps Script, log masuk UTHM) ---------- */
+  const URL_PAPAN = 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbyn_Ws5KjbJP9GnE5043e7Gn_Eu8dZlrcENZykLQUYuaYtzJDbAGERA1ehOyYPqv_tyOQ/exec';
+  const GAS = !!(window.google && google.script && google.script.run);
+  let tokenSesi = null;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const panggil = (fn, ...args) => new Promise((ok, gagal) =>
+    google.script.run.withSuccessHandler(ok).withFailureHandler(gagal)[fn](...args));
+  const mesej = e => (e && e.message) || String(e);
+  function tunjukRalat(e) { $('papan-ralat').textContent = mesej(e); $('papan-ralat').hidden = false; }
+  function lukisPapan(p) {
+    $('papan-ralat').hidden = true;
+    const s = p.saya;
+    $('papan-saya').innerHTML = 'Anda: <b>' + esc(s.nama) + '</b> · ' +
+      (s.kedudukan ? 'kedudukan <b>#' + s.kedudukan + '</b> daripada ' + s.jumlah + ' pemain' : 'belum ada skor');
+    $('input-nama').value = s.nama;
+    $('senarai-papan').innerHTML = p.atas.length
+      ? p.atas.map(r => '<li' + (r.saya ? ' class="saya"' : '') + '><span class="no">' + r.no + '</span><span class="nama">' +
+          esc(r.nama) + '</span><span class="mata">' + r.skor + '</span></li>').join('')
+      : '<li class="papan-kosong">Belum ada skor. Jadilah yang pertama!</li>';
+    if (s.terbaik > terbaik) { terbaik = s.terbaik; ls.set('kejar.terbaik', terbaik); $('terbaik').textContent = terbaik; }
+  }
+  function mintaSesi() {
+    tokenSesi = null;
+    if (GAS) panggil('mulaSesi').then(t => { tokenSesi = t; }).catch(() => {});
+  }
+  function rekodSkor() {
+    const el = $('kedudukan-akhir');
+    el.hidden = true;
+    if (!GAS || !tokenSesi) return;
+    const t = tokenSesi; tokenSesi = null;
+    el.textContent = 'Merekod skor…'; el.hidden = false;
+    panggil('hantarSkor', t, skor, kertasDitangkap).then(p => {
+      lukisPapan(p);
+      el.textContent = p.saya.kedudukan ? 'Kedudukan anda: #' + p.saya.kedudukan + ' di UTHM' : '';
+    }).catch(e => { el.textContent = 'Skor tidak direkod: ' + mesej(e); });
+  }
+  if (GAS) {
+    $('papan').hidden = false;
+    $('nota-simpan').textContent = 'Skor terbaik anda direkod dalam Papan Markah UTHM.';
+    panggil('papanMarkah').then(lukisPapan).catch(tunjukRalat);
+    $('btn-nama').addEventListener('click', () => {
+      $('borang-nama').hidden = !$('borang-nama').hidden;
+      if (!$('borang-nama').hidden) $('input-nama').focus();
+    });
+    $('borang-nama').addEventListener('submit', e => {
+      e.preventDefault();
+      panggil('tukarNama', $('input-nama').value)
+        .then(p => { lukisPapan(p); $('borang-nama').hidden = true; })
+        .catch(tunjukRalat);
+    });
+  } else if (/^https:/.test(URL_PAPAN)) {
+    $('ajak').href = URL_PAPAN; $('ajak').hidden = false;
+  }
+
+  const gandaan = () =>Math.min(4, 1 + Math.floor(rentetan / 10));
   const tahap = () => Math.min(1, masaMain / 90);            // 0 → 1 dalam 90 saat
 
   function mula() {
@@ -232,6 +334,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     kemasHud();
     $('skrin-mula').hidden = $('skrin-tamat').hidden = $('skrin-jeda').hidden = true;
     jalan = true; jeda = false; masaLepas = performance.now();
+    mintaSesi();
     bip(520, .1, 'triangle');
     requestAnimationFrame(gelung);
   }
@@ -244,6 +347,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     $('kertas-akhir').textContent = kertasDitangkap + ' helai kertas didigitalkan';
     $('rekod-baru').hidden = !rekod;
     $('skrin-tamat').hidden = false;
+    rekodSkor();
     bip(220, .35, 'sawtooth', .05);
     setTimeout(() => $('btn-lagi').focus(), 50);
   }
