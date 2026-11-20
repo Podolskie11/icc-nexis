@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>e-TemplateGambar · ICC NEXIS</title>
+<meta name="description" content="e-TemplateGambar — masukkan banyak gambar ke dalam frame rasmi UTHM sekali gus.">
+<meta name="theme-color" content="#14213d">
+<link rel="icon" href="../icons/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="uthm-assets.js"></script>
+<script>
+  // Ikut tema yang dipilih di ICC NEXIS (disimpan pada peranti yang sama)
+  try { const t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+:root {
+  --navy: #14213d; --aksen: #2dd4bf; --warna: #8b5cf6;
+  --latar: #f4f6fb; --permukaan: #ffffff; --permukaan-2: #f7f8fc;
+  --teks: #141a2b; --teks-2: #5b6478; --garis: #e3e7f0; --utama: #3454d1;
+  --bayang: 0 1px 2px rgba(20,33,61,.06), 0 6px 22px rgba(20,33,61,.08);
+  --btn-latar: var(--navy); --btn-teks: #fff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --latar: #0d1324; --permukaan: #161e33; --permukaan-2: #1c2540;
+    --teks: #e8ecf6; --teks-2: #9aa4bd; --garis: #27314d; --utama: #6b86ff;
+    --bayang: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.3);
+    --btn-latar: var(--aksen); --btn-teks: var(--navy);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --latar: #0d1324; --permukaan: #161e33; --permukaan-2: #1c2540;
+  --teks: #e8ecf6; --teks-2: #9aa4bd; --garis: #27314d; --utama: #6b86ff;
+  --bayang: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.3);
+  --btn-latar: var(--aksen); --btn-teks: var(--navy);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--latar); color: var(--teks);
+       font: 15px/1.5 "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif; }
+h1, h2, p { margin: 0; }
+button, select { font: inherit; }
+.ikon { width: 20px; height: 20px; flex: none; }
+
+/* ---------- Kepala ---------- */
+.kepala { background: var(--navy); color: #fff; padding: calc(env(safe-area-inset-top) + 20px) 16px 84px; position: relative; overflow: hidden; isolation: isolate; }
+.kepala::before { content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.5px); background-size: 22px 22px;
+  mask-image: linear-gradient(180deg, #000 30%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
+.gumpal { position: absolute; border-radius: 50%; filter: blur(40px); z-index: -1; pointer-events: none; }
+.gumpal.a { width: 300px; height: 300px; right: -90px; top: -110px; background: rgba(139,92,246,.35); }
+.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(11,149,240,.40); }
+.kepala-dalam { max-width: 960px; margin: 0 auto; }
+.bar-atas { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
+.balik { display: inline-flex; align-items: center; gap: 8px; color: #e8ecf6; text-decoration: none; font-weight: 700; font-size: 13px;
+  height: 36px; padding: 0 14px 0 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); margin-right: auto; }
+.balik:hover { background: rgba(255,255,255,.16); }
+.balik img { width: 22px; height: 22px; border-radius: 6px; }
+.cip { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; cursor: pointer;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #e8ecf6; }
+.cip:hover { background: rgba(255,255,255,.16); }
+.cip .ikon { width: 16px; height: 16px; }
+.tajuk { display: flex; align-items: center; gap: 14px; }
+.tajuk .lencana { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(139,92,246,.22); color: #c4b5fd; flex: none; }
+.tajuk .lencana .ikon { width: 28px; height: 28px; }
+.kepala h1 { font-size: 26px; font-weight: 800; letter-spacing: -.4px; }
+.kepala p { color: #b9c3dd; margin-top: 4px; font-size: 14px; }
+
+/* ---------- Kandungan ---------- */
+main { max-width: 960px; margin: -56px auto 0; padding: 0 16px calc(32px + env(safe-area-inset-bottom)); position: relative; z-index: 2; display: grid; gap: 14px; }
+.kad { background: var(--permukaan); border: 1px solid var(--garis); border-radius: 20px; padding: 18px; box-shadow: var(--bayang); min-width: 0; }
+.kad h2 { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.langkah { width: 26px; height: 26px; border-radius: 999px; display: inline-grid; place-items: center; font-size: 13px; background: var(--warna); color: #fff; }
+.petunjuk { color: var(--teks-2); font-size: 13.5px; margin: 4px 0 14px; }
+.lencana-kecil { font-size: 11.5px; font-weight: 700; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--garis); color: var(--teks-2); }
+.lencana-kecil.ok { color: #12805c; border-color: #8fd8b9; background: #e9f8f1; }
+:root[data-theme="dark"] .lencana-kecil.ok { color: #6ee7b7; border-color: #1f6b52; background: #0f2a22; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lencana-kecil.ok { color: #6ee7b7; border-color: #1f6b52; background: #0f2a22; } }
+
+.zon { display: block; border: 2px dashed var(--garis); border-radius: 16px; padding: 26px 16px; text-align: center; cursor: pointer; color: var(--teks-2);
+  background: var(--permukaan-2); transition: border-color .15s, background .15s; }
+.zon:hover, .zon.atas { border-color: var(--warna); background: color-mix(in srgb, var(--warna) 8%, var(--permukaan-2)); }
+.zon input { display: none; }
+.zon b { color: var(--teks); display: block; font-size: 15px; }
+.zon .ikon { width: 30px; height: 30px; color: var(--warna); margin-bottom: 6px; }
+
+.baris { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; }
+.pratonton { flex: 1 1 380px; min-width: 0; }
+.pratonton canvas { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--garis);
+  background: repeating-conic-gradient(#d5d9e2 0% 25%, #eef0f5 0% 50%) 50% / 18px 18px; }
+.kawalan { flex: 1 1 260px; display: grid; gap: 10px; font-size: 14px; }
+.kawalan label { display: grid; grid-template-columns: 74px 1fr 44px; gap: 8px; align-items: center; }
+.kawalan output { text-align: right; color: var(--teks-2); font-variant-numeric: tabular-nums; font-size: 13px; }
+.kawalan input[type=range] { accent-color: var(--warna); }
+.kawalan .pilih { grid-template-columns: 74px 1fr; }
+select { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--garis); background: var(--permukaan); color: var(--teks); min-width: 0; }
+.butang-baris { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.lanjutan summary { cursor: pointer; font-weight: 700; color: var(--teks-2); font-size: 13.5px; }
+.lanjutan[open] summary { margin-bottom: 10px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 18px; border-radius: 12px; border: 0;
+  cursor: pointer; font-weight: 700; font-size: 14px; background: var(--btn-latar); color: var(--btn-teks); transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,199,169,.3); }
+.btn.hantu { background: var(--permukaan-2); color: var(--teks); border: 1px solid var(--garis); }
+.btn.hantu:hover { box-shadow: none; }
+.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn .ikon { width: 18px; height: 18px; }
+
+.alat { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.alat .ruang { flex: 1; }
+.alat label { font-size: 13.5px; color: var(--teks-2); display: flex; align-items: center; gap: 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.item { border: 1px solid var(--garis); border-radius: 14px; overflow: hidden; background: var(--permukaan-2); animation: naik .4s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes naik { from { opacity: 0; transform: translateY(10px); } }
+.item img { width: 100%; display: block; }
+.item .meta { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 8px 10px; }
+.item .meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--teks-2); font-size: 12.5px; }
+.item .meta .btn { min-height: 32px; padding: 0 10px; font-size: 12.5px; border-radius: 9px; }
+.kosong { color: var(--teks-2); font-size: 14px; text-align: center; padding: 24px 10px; }
+footer { text-align: center; font-size: 12.5px; color: var(--teks-2); margin-top: 6px; }
+footer a { color: inherit; }
+[hidden] { display: none !important; }
+@media (min-width: 720px) { .kepala h1 { font-size: 32px; } .kepala { padding-bottom: 96px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="kepala">
+  <span class="gumpal a"></span><span class="gumpal b"></span>
+  <div class="kepala-dalam">
+    <div class="bar-atas">
+      <a class="balik" href="../"><img src="../icons/logo.svg" alt="">ICC NEXIS</a>
+      <button class="cip" id="btn-tema" type="button" aria-label="Tukar tema" title="Tukar tema cerah / gelap"></button>
+    </div>
+    <div class="tajuk">
+      <div class="lencana"><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/></svg></div>
+      <div>
+        <h1>e-TemplateGambar</h1>
+        <p>Masukkan banyak gambar ke dalam frame rasmi UTHM sekali gus. Semua diproses dalam pelayar anda, tiada gambar dimuat naik ke mana-mana.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- LANGKAH 1: GAMBAR -->
+  <section class="kad">
+    <h2><span class="langkah">1</span> Pilih gambar <span id="lencana-gambar" class="lencana-kecil">0 gambar</span></h2>
+    <p class="petunjuk">Pilih atau seret seberapa banyak gambar yang anda mahu. Setiap gambar akan dimasukkan ke dalam frame secara automatik.</p>
+    <label class="zon" id="zon-gambar">
+      <input type="file" id="input-gambar" accept="image/*" multiple>
+      <svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+      <b>Klik atau seret gambar ke sini</b>
+      JPG, PNG, WEBP · boleh pilih banyak sekali gus
+    </label>
+  </section>
+
+  <!-- LANGKAH 2: HASIL -->
+  <section class="kad">
+    <h2><span class="langkah">2</span> Hasil</h2>
+    <div class="alat" style="margin-top:12px">
+      <label>Format
+        <select id="fmt"><option value="jpg">JPG</option><option value="png">PNG</option></select>
+      </label>
+      <label>Saiz gambar
+        <select id="muat"><option value="cover">Penuh (potong tepi)</option><option value="contain">Muat semua (tiada potong)</option></select>
+      </label>
+      <span class="ruang"></span>
+      <button class="btn hantu" id="btn-kosong" type="button">Kosongkan</button>
+      <button class="btn" id="btn-zip" type="button" disabled>
+        <svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        <span id="teks-zip">Muat turun semua (ZIP)</span>
+      </button>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div id="kosong" class="kosong">Gambar siap akan dipaparkan di sini.</div>
+  </section>
+
+  <!-- LANGKAH 3: FRAME (lanjutan) -->
+  <details class="kad lanjutan" id="kad-frame">
+    <summary>Tetapan frame (lanjutan)</summary>
+    <p class="petunjuk">Frame rasmi UTHM sudah dimuatkan. Tukar hanya jika anda mahu guna frame lain: PNG dengan bahagian tengah <b>lutsinar</b> (Canva → Muat turun → PNG → <i>Transparent background</i>).</p>
+    <div class="baris">
+      <div class="pratonton">
+        <label class="zon" id="zon-frame" hidden>
+          <input type="file" id="input-frame" accept="image/png,image/webp">
+          <b>Klik atau seret frame PNG ke sini</b>
+        </label>
+        <canvas id="kanvas-frame"></canvas>
+      </div>
+      <div class="kawalan">
+        <div><b>Kawasan gambar</b> <span id="lencana-frame" class="lencana-kecil"></span></div>
+        <label>Kiri <input type="range" id="aL" min="0" max="100" step="0.1"><output id="oL"></output></label>
+        <label>Atas <input type="range" id="aT" min="0" max="100" step="0.1"><output id="oT"></output></label>
+        <label>Kanan <input type="range" id="aR" min="0" max="100" step="0.1"><output id="oR"></output></label>
+        <label>Bawah <input type="range" id="aB" min="0" max="100" step="0.1"><output id="oB"></output></label>
+        <div class="butang-baris">
+          <button class="btn hantu" id="btn-auto" type="button">Kesan automatik</button>
+          <button class="btn hantu" id="btn-frame-lain" type="button">Guna frame lain</button>
+          <button class="btn hantu" id="btn-frame-uthm" type="button">Frame UTHM</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <footer>e-TemplateGambar · <a href="../">ICC NEXIS</a> · Digital Ecosystem · UTHM</footer>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const ls = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
+  };
+  const svg = p => '<svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>';
+
+  /* ---------- Tema (dikongsi dengan ICC NEXIS) ---------- */
+  const IKON_TEMA = {
+    light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    dark: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
+  };
+  const temaSemasa = () => document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const lukisTema = () => { $('btn-tema').innerHTML = svg(IKON_TEMA[temaSemasa()]); };
+  $('btn-tema').addEventListener('click', () => {
+    const t = temaSemasa() === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t; ls.set('tema', t); lukisTema();
+  });
+  lukisTema();
+
+  /* ---------- Keadaan ---------- */
+  let frame = null;                          // Image frame
+  let kawasan = { l: 0, t: 0, r: 100, b: 100 }; // peratus
+  let gambar = [];                           // { nama, img }
+
+  const muatImej = src => new Promise((ok, gagal) => { const im = new Image(); im.onload = () => ok(im); im.onerror = gagal; im.src = src; });
+  const keDataURL = f => new Promise((ok, gagal) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = gagal; r.readAsDataURL(f); });
+  function zonSeret(zon, input, terima) {
+    input.addEventListener('change', () => { terima([...input.files]); input.value = ''; });
+    ['dragenter', 'dragover'].forEach(e => zon.addEventListener(e, ev => { ev.preventDefault(); zon.classList.add('atas'); }));
+    ['dragleave', 'drop'].forEach(e => zon.addEventListener(e, ev => { ev.preventDefault(); zon.classList.remove('atas'); }));
+    zon.addEventListener('drop', ev => terima([...ev.dataTransfer.files].filter(f => f.type.startsWith('image/'))));
+  }
+
+  /* ---------- Frame ---------- */
+  // Cari kotak bahagian lutsinar (kawasan gambar) dalam frame
+  function kesanKawasan(img) {
+    const c = document.createElement('canvas');
+    const s = Math.min(1, 800 / Math.max(img.width, img.height));
+    c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+    const x = c.getContext('2d', { willReadFrequently: true });
+    x.drawImage(img, 0, 0, c.width, c.height);
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
+    for (let y = 0; y < c.height; y++) for (let i = 0; i < c.width; i++) {
+      if (d[(y * c.width + i) * 4 + 3] < 20) { if (i < x0) x0 = i; if (i > x1) x1 = i; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    }
+    if (x1 < 0) return null;
+    return { l: x0 / c.width * 100, t: y0 / c.height * 100, r: (x1 + 1) / c.width * 100, b: (y1 + 1) / c.height * 100 };
+  }
+  function segerakGelangsar() {
+    [['aL', 'oL', 'l'], ['aT', 'oT', 't'], ['aR', 'oR', 'r'], ['aB', 'oB', 'b']].forEach(([s, o, k]) => {
+      $(s).value = kawasan[k]; $(o).textContent = (+kawasan[k]).toFixed(1);
+    });
+  }
+  function lukisFrame() {
+    const cv = $('kanvas-frame');
+    cv.hidden = !frame; if (!frame) return;
+    cv.width = frame.width; cv.height = frame.height;
+    const x = cv.getContext('2d');
+    x.clearRect(0, 0, cv.width, cv.height); x.drawImage(frame, 0, 0);
+    const X = kawasan.l / 100 * cv.width, Y = kawasan.t / 100 * cv.height;
+    const W = (kawasan.r - kawasan.l) / 100 * cv.width, H = (kawasan.b - kawasan.t) / 100 * cv.height;
+    x.fillStyle = 'rgba(139,92,246,.16)'; x.fillRect(X, Y, W, H);
+    x.lineWidth = Math.max(2, cv.width / 400); x.setLineDash([12, 8]); x.strokeStyle = '#8b5cf6'; x.strokeRect(X, Y, W, H);
+  }
+  async function setFrame(dataUrl, simpan, kawasanSimpan) {
+    frame = await muatImej(dataUrl);
+    kawasan = kawasanSimpan || kesanKawasan(frame) || { l: 0, t: 0, r: 100, b: 100 };
+    if (simpan) { ls.set('etg.frame', dataUrl); ls.set('etg.kawasan', JSON.stringify(kawasan)); }
+    $('lencana-frame').textContent = (simpan ? 'Frame sendiri · ' : 'Frame UTHM · ') + frame.width + '×' + frame.height;
+    $('lencana-frame').classList.add('ok');
+    $('zon-frame').hidden = true;
+    segerakGelangsar(); lukisFrame(); paparSemua();
+  }
+  const guraFrameUthm = () => { ls.set('etg.frame', null); ls.set('etg.kawasan', null); return setFrame(window.UTHM_ASSETS.frame, false); };
+
+  zonSeret($('zon-frame'), $('input-frame'), async f => { if (f[0]) setFrame(await keDataURL(f[0]), true); });
+  [['aL', 'l'], ['aT', 't'], ['aR', 'r'], ['aB', 'b']].forEach(([id, k]) => {
+    $(id).addEventListener('input', e => {
+      kawasan[k] = +e.target.value;
+      if (kawasan.r <= kawasan.l + 1) kawasan.r = Math.min(100, kawasan.l + 1);
+      if (kawasan.b <= kawasan.t + 1) kawasan.b = Math.min(100, kawasan.t + 1);
+      segerakGelangsar(); lukisFrame();
+    });
+    $(id).addEventListener('change', () => { if (ls.get('etg.frame')) ls.set('etg.kawasan', JSON.stringify(kawasan)); paparSemua(); });
+  });
+  $('btn-auto').addEventListener('click', () => {
+    if (!frame) return;
+    const k = kesanKawasan(frame);
+    if (!k) { alert('Tiada bahagian lutsinar dalam frame ini. Tetapkan kawasan gambar dengan gelangsar.'); return; }
+    kawasan = k; if (ls.get('etg.frame')) ls.set('etg.kawasan', JSON.stringify(kawasan));
+    segerakGelangsar(); lukisFrame(); paparSemua();
+  });
+  $('btn-frame-lain').addEventListener('click', () => { $('zon-frame').hidden = false; $('input-frame').click(); });
+  $('btn-frame-uthm').addEventListener('click', guraFrameUthm);
+  ['fmt', 'muat'].forEach(id => {
+    const s = ls.get('etg.' + id); if (s) $(id).value = s;
+    $(id).addEventListener('change', () => { ls.set('etg.' + id, $(id).value); paparSemua(); });
+  });
+
+  /* ---------- Gabung gambar + frame ---------- */
+  function gabung(foto) {
+    const W = frame.width, H = frame.height;
+    const c = document.createElement('canvas'); c.width = W; c.height = H;
+    const x = c.getContext('2d'); x.imageSmoothingQuality = 'high';
+    const ax = kawasan.l / 100 * W, ay = kawasan.t / 100 * H, aw = (kawasan.r - kawasan.l) / 100 * W, ah = (kawasan.b - kawasan.t) / 100 * H;
+    const penuh = $('muat').value === 'cover';
+    const sk = penuh ? Math.max(aw / foto.width, ah / foto.height) : Math.min(aw / foto.width, ah / foto.height);
+    const dw = foto.width * sk, dh = foto.height * sk;
+    x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H);
+    x.save(); x.beginPath(); x.rect(ax, ay, aw, ah); x.clip();
+    x.drawImage(foto, ax + (aw - dw) / 2, ay + (ah - dh) / 2, dw, dh);
+    x.restore();
+    x.drawImage(frame, 0, 0);
+    return c;
+  }
+  const keBlob = c => new Promise(ok => c.toBlob(ok, $('fmt').value === 'jpg' ? 'image/jpeg' : 'image/png', 0.92));
+  const namaKeluar = n => n.replace(/\.[^.]+$/, '') + '_UTHM.' + $('fmt').value;
+  function muatTurun(blob, nama) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nama; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }
+
+  function paparSemua() {
+    const grid = $('grid'); grid.innerHTML = '';
+    $('lencana-gambar').textContent = gambar.length + ' gambar';
+    $('lencana-gambar').classList.toggle('ok', gambar.length > 0);
+    $('kosong').hidden = gambar.length > 0 && !!frame;
+    $('btn-zip').disabled = !(frame && gambar.length);
+    if (!frame) return;
+    gambar.forEach((g, i) => {
+      const el = document.createElement('div'); el.className = 'item'; el.style.animationDelay = Math.min(i, 12) * 40 + 'ms';
+      const im = document.createElement('img'); im.src = gabung(g.img).toDataURL('image/jpeg', 0.7); im.alt = g.nama;
+      const meta = document.createElement('div'); meta.className = 'meta';
+      const nm = document.createElement('span'); nm.textContent = g.nama; nm.title = g.nama;
+      const dl = document.createElement('button'); dl.className = 'btn'; dl.type = 'button'; dl.textContent = 'Muat turun';
+      dl.onclick = async () => muatTurun(await keBlob(gabung(g.img)), namaKeluar(g.nama));
+      const bu = document.createElement('button'); bu.className = 'btn hantu'; bu.type = 'button'; bu.textContent = '✕'; bu.title = 'Buang';
+      bu.onclick = () => { gambar.splice(i, 1); paparSemua(); };
+      const bt = document.createElement('div'); bt.style.cssText = 'display:flex;gap:6px';
+      bt.append(dl, bu); meta.append(nm, bt); el.append(im, meta); grid.append(el);
+    });
+  }
+
+  zonSeret($('zon-gambar'), $('input-gambar'), async fail => {
+    for (const f of fail) { try { gambar.push({ nama: f.name, img: await muatImej(await keDataURL(f)) }); } catch (e) {} }
+    paparSemua();
+  });
+  $('btn-kosong').addEventListener('click', () => { gambar = []; paparSemua(); });
+
+  $('btn-zip').addEventListener('click', async () => {
+    const btn = $('btn-zip'), teks = $('teks-zip'); btn.disabled = true;
+    const zip = new JSZip(), guna = new Set();
+    for (let i = 0; i < gambar.length; i++) {
+      teks.textContent = 'Menyediakan ' + (i + 1) + '/' + gambar.length + '…';
+      let n = namaKeluar(gambar[i].nama), k = 1;
+      while (guna.has(n)) n = namaKeluar(gambar[i].nama).replace(/(\.\w+)$/, '_' + (k++) + '$1');
+      guna.add(n);
+      zip.file(n, await keBlob(gabung(gambar[i].img)));
+    }
+    teks.textContent = 'Memampatkan…';
+    muatTurun(await zip.generateAsync({ type: 'blob' }), 'e-TemplateGambar.zip');
+    teks.textContent = 'Muat turun semua (ZIP)'; btn.disabled = false;
+  });
+
+  /* ---------- Mula ---------- */
+  const frameSimpan = ls.get('etg.frame');
+  if (frameSimpan) {
+    let k = null; try { k = JSON.parse(ls.get('etg.kawasan')); } catch (e) {}
+    setFrame(frameSimpan, true, k).catch(guraFrameUthm);
+  } else guraFrameUthm();
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # ICC NEXIS — Digital Ecosystem
 
-**One platform. Every system.** Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset**, **e-LogKenderaan** dan **e-TempahanRuang**).
+**One platform. Every system.** Pintu masuk tunggal ke sistem dalaman warga ICC (**e-PinjamAset**, **e-LogKenderaan**, **e-TempahanRuang** dan **e-TemplateGambar**).
 Portal ini ialah **PWA (Progressive Web App)**, jadi ia boleh di-*install* di Android, iPhone dan komputer tanpa melalui Play Store atau App Store. Ia dihoskan secara percuma di **GitHub Pages**.
 
 ## Cara ia berfungsi
@@ -61,3 +61,9 @@ Dalam `index.html`, salin satu blok `{ nama, keterangan, url, warna, ikon }` dal
 
 - **Cloudflare Pages**: <https://pages.cloudflare.com>. Pilih *Upload assets* dan seret folder ini.
 - **Netlify Drop**: <https://app.netlify.com/drop>. Seret folder ini.
+
+## e-TemplateGambar
+
+Folder `e-templategambar/` ialah alat untuk memasukkan banyak gambar ke dalam frame rasmi UTHM sekali gus (muat turun satu-satu atau ZIP). Semua diproses dalam pelayar, tiada gambar dimuat naik ke mana-mana.
+
+- **Tukar frame:** eksport frame baharu dari Canva sebagai PNG dengan *Transparent background* (bahagian gambar dikosongkan), kemudian jana semula `e-templategambar/uthm-assets.js` daripadanya. Pengguna juga boleh pilih frame sendiri melalui **Tetapan frame (lanjutan)**.

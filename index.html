@@ -42,6 +42,13 @@
       url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbyfsSLJiGp0_AOU5GTJTTQMrPE2PxUtf-3I7F3IfPX7zLrMgMTgCdVhkMLyJidi8RRtJQ/exec',
       warna: '#14807a',
       ikon: '<path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M14.5 12h.01"/>'
+    },
+    {
+      nama: 'e-TemplateGambar',
+      keterangan: 'Masukkan banyak gambar ke dalam frame rasmi UTHM sekali gus',
+      url: 'e-templategambar/',   // halaman dalam portal ini sendiri (dibuka dalam tab yang sama)
+      warna: '#8b5cf6',
+      ikon: '<rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/>'
     }
   ];
   const DOMAIN = 'uthm.edu.my';
@@ -55,7 +62,8 @@
     ['🖨️', 'Penyelia boleh <b>Jana Borang</b> log kenderaan bulanan — siap untuk dicetak dalam format A4.'],
     ['📱', 'Pasang ICC NEXIS di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
     ['⛽', 'Isi bacaan <b>odometer</b> — e-LogKenderaan akan cadangkan jarak perjalanan secara automatik.'],
-    ['🔐', 'Hanya akaun <b>@uthm.edu.my</b> yang berdaftar boleh masuk. Kali pertama? Tekan <b>Mohon akses</b>.']
+    ['🔐', 'Hanya akaun <b>@uthm.edu.my</b> yang berdaftar boleh masuk. Kali pertama? Tekan <b>Mohon akses</b>.'],
+    ['🖼️', 'Ada banyak gambar majlis? <b>e-TemplateGambar</b> masukkan semuanya ke dalam frame UTHM sekali gus dan beri satu fail ZIP.']
   ];
 </script>
 <script>
@@ -447,7 +455,8 @@ a.kad-sistem:hover .buka { gap: 10px; }
   /* ---------- Kad sistem ---------- */
   function renderSistem() {
     $('senarai-sistem').innerHTML = SISTEM.map((s, i) => {
-      const ada = /^https:\/\//.test(s.url);
+      const dalaman = /^[\w-]+\/?$/.test(s.url);   // halaman dalam portal ini (cth. 'e-templategambar/')
+      const ada = dalaman || /^https:\/\//.test(s.url);
       const lepas = +ls.get('terakhir-' + i);
       const dalam =
         '<div class="lencana-ikon">' + svg(s.ikon) + '</div>' +
@@ -459,7 +468,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
         (ada ? '<div class="anak-panah">' + svg(PANAH) + '</div>' : '<div></div>') +
         (ada && i < 9 ? '<kbd title="Tekan ' + (i + 1) + ' untuk buka">' + (i + 1) + '</kbd>' : '');
       return ada
-        ? '<a class="kad-sistem muncul" style="--i:' + i + ';--warna:' + esc(s.warna) + '" data-i="' + i + '" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + dalam + '</a>'
+        ? '<a class="kad-sistem muncul" style="--i:' + i + ';--warna:' + esc(s.warna) + '" data-i="' + i + '" href="' + esc(s.url) + '"' + (dalaman ? '' : ' target="_blank" rel="noopener"') + '>' + dalam + '</a>'
         : '<div class="kad-sistem tutup muncul" style="--i:' + i + ';--warna:' + esc(s.warna) + '">' + dalam + '</div>';
     }).join('');
 
@@ -512,8 +521,9 @@ a.kad-sistem:hover .buka { gap: 10px; }
     const i = +e.key - 1;
     const kad = document.querySelector('a.kad-sistem[data-i="' + i + '"]');
     if (!kad) return;
-    window.open(kad.href, '_blank', 'noopener');
     tandaBuka(kad);
+    if (kad.target === '_blank') window.open(kad.href, '_blank', 'noopener');
+    else location.href = kad.href;
   });
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     $('nota-kekunci').innerHTML = ' · Tekan ' + SISTEM.map((s, i) => '<kbd>' + (i + 1) + '</kbd>').join('') + ' untuk buka sistem';

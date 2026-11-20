@@ -1,6 +1,6 @@
 // Service worker: simpan rangka Portal supaya ia dibuka pantas & boleh dipasang sebagai app.
 // Naikkan VERSI setiap kali index.html dikemas kini supaya telefon pengguna dapat versi baharu.
-const VERSI = 'icc-nexis-v7';
+const VERSI = 'icc-nexis-v8';
 const FAIL = [
   './',
   './index.html',
