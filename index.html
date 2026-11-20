@@ -27,43 +27,60 @@
       keterangan: 'Mohon pinjam, serah & pulang aset PTj',
       url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbyxWtLkWNTHbU9P39VbQ4oy4kCVhOk6IduMEabB-3SXLKbOinqNoW_YFY49KF0uT5hC/exec',
       warna: '#1d8a6b',
-      ikon: '<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="m3 7.5 9 4.5 9-4.5M12 12v9"/>'
+      ikon: '<path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="m3 7.5 9 4.5 9-4.5M12 12v9"/>',
+      logo: 'icons/sistem/pinjamaset.png'
     },
     {
       nama: 'e-LogKenderaan',
       keterangan: 'Rekod perjalanan & bahan api kenderaan pejabat',
       url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbxI8JzuZugVprR8tcqESpyPNqIRAAfZ6dgAz6C6028u-gx5z5mHbBSUVYT6kJrBId2Nrw/exec',
-      warna: '#fca311',
-      ikon: '<path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><path d="M5 11h14"/>'
+      warna: '#e8930c',
+      ikon: '<path d="M5 16V11l2-5h10l2 5v5"/><path d="M3 16h18v3H3z"/><path d="M5 11h14"/>',
+      logo: 'icons/sistem/logkenderaan.png'
     },
     {
       nama: 'e-TempahanRuang',
       keterangan: 'Tempah bilik mesyuarat, makmal & ruang ICC',
       url: 'https://script.google.com/a/macros/uthm.edu.my/s/AKfycbyfsSLJiGp0_AOU5GTJTTQMrPE2PxUtf-3I7F3IfPX7zLrMgMTgCdVhkMLyJidi8RRtJQ/exec',
-      warna: '#14807a',
-      ikon: '<path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M14.5 12h.01"/>'
+      warna: '#1f6fd1',
+      ikon: '<path d="M4 21h16"/><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"/><path d="M14.5 12h.01"/>',
+      logo: 'icons/sistem/tempahanruang.png'
     },
     {
       nama: 'e-TemplateGambar',
       keterangan: 'Masukkan banyak gambar ke dalam frame rasmi ICC sekali gus',
       url: 'e-templategambar/',   // halaman dalam portal ini sendiri (dibuka dalam tab yang sama)
       warna: '#8b5cf6',
-      ikon: '<rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/>'
+      ikon: '<rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/>',
+      logo: 'icons/sistem/templategambar.png'
     }
   ];
   const DOMAIN = 'uthm.edu.my';
 
+  /* Ikon untuk setiap tip (garisan 24×24, gaya sama dengan ikon lain) */
+  const IKON_TIP = {
+    video: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/>',
+    loceng: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+    papan: '<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>',
+    kalendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/>',
+    cetak: '<path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/>',
+    telefon: '<rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/>',
+    minyak: '<path d="M4 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M3 21h13M4 10h11"/><path d="M15 8h2a2 2 0 0 1 2 2v6a1.5 1.5 0 0 0 3 0V9l-3-3"/>',
+    kunci: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    gambar: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>'
+  };
+
   /* Tip yang dipaparkan dalam "Tahukah anda?" — tambah/ubah ikut keperluan */
   const TIP = [
-    ['📺', 'Baru pertama kali? Tonton <b>Tutorial video</b> di bahagian Panduan — setiap langkah boleh ditekan.'],
-    ['🔔', 'Tekan ikon <b>loceng</b> dalam e-PinjamAset untuk lihat status permohonan anda — tiada lagi emel bertimbun.'],
-    ['⌨️', 'Di komputer, tekan kekunci <b>1</b>, <b>2</b> atau <b>3</b> untuk terus membuka sistem.'],
-    ['🗓️', 'Buka <b>Jadual Ruang</b> dalam e-TempahanRuang dan klik slot kosong untuk terus menempah bilik.'],
-    ['🖨️', 'Penyelia boleh <b>Jana Borang</b> log kenderaan bulanan — siap untuk dicetak dalam format A4.'],
-    ['📱', 'Pasang ICC NEXIS di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
-    ['⛽', 'Isi bacaan <b>odometer</b> — e-LogKenderaan akan cadangkan jarak perjalanan secara automatik.'],
-    ['🔐', 'Hanya akaun <b>@uthm.edu.my</b> yang berdaftar boleh masuk. Kali pertama? Tekan <b>Mohon akses</b>.'],
-    ['🖼️', 'Ada banyak gambar majlis? <b>e-TemplateGambar</b> masukkan semuanya ke dalam frame rasmi ICC sekali gus dan beri satu fail ZIP.']
+    ['video', 'Baru pertama kali? Tonton <b>Tutorial video</b> di bahagian Panduan — setiap langkah boleh ditekan.'],
+    ['loceng', 'Tekan ikon <b>loceng</b> dalam e-PinjamAset untuk lihat status permohonan anda — tiada lagi emel bertimbun.'],
+    ['papan', 'Di komputer, tekan kekunci <b>1</b> hingga <b>4</b> untuk terus membuka sistem.'],
+    ['kalendar', 'Buka <b>Jadual Ruang</b> dalam e-TempahanRuang dan klik slot kosong untuk terus menempah bilik.'],
+    ['cetak', 'Penyelia boleh <b>Jana Borang</b> log kenderaan bulanan — siap untuk dicetak dalam format A4.'],
+    ['telefon', 'Pasang ICC NEXIS di telefon supaya ia sentiasa ada di skrin utama, macam aplikasi biasa.'],
+    ['minyak', 'Isi bacaan <b>odometer</b> — e-LogKenderaan akan cadangkan jarak perjalanan secara automatik.'],
+    ['kunci', 'Hanya akaun <b>@uthm.edu.my</b> yang berdaftar boleh masuk. Kali pertama? Tekan <b>Mohon akses</b>.'],
+    ['gambar', 'Ada banyak gambar majlis? <b>e-TemplateGambar</b> masukkan semuanya ke dalam frame rasmi ICC sekali gus dan beri satu fail ZIP.']
   ];
 </script>
 <script>
@@ -143,7 +160,7 @@ button { font: inherit; }
 .jenama .garis-tegak { width: 1px; height: 30px; background: rgba(255,255,255,.22); flex: none; }
 .jenama b { display: block; font: 800 17px/1.1 "Montserrat", sans-serif; letter-spacing: .4px; }
 .jenama b .nexis { display: inline; font-size: inherit; font-weight: 500; color: #fff; }
-.jenama span { display: block; font-size: 11.5px; color: #a9b7cf; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px; }
+.jenama span { display: block; font-size: 12px; color: #a9b7cf; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 3px; }
 .cip {
   display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border-radius: 999px;
   background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: #e8ecf6;
@@ -182,19 +199,11 @@ main { max-width: 820px; margin: -64px auto 0; padding: 0 16px calc(32px + env(s
   transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s;
   -webkit-tap-highlight-color: transparent; outline: none;
 }
-/* Jalur warna di atas kad */
-.kad-sistem::after {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px;
-  background: linear-gradient(90deg, transparent, var(--warna), transparent);
-  transform: scaleX(0); transition: transform .4s cubic-bezier(.2,.8,.2,1);
-}
 a.kad-sistem:hover, a.kad-sistem:focus-visible {
   transform: translateY(-3px);
   box-shadow: var(--bayang-angkat); border-color: color-mix(in srgb, var(--warna) 45%, var(--garis));
 }
-a.kad-sistem:hover::after, a.kad-sistem:focus-visible::after { transform: scaleX(1); }
 a.kad-sistem:active { transform: scale(.985); }
-a.kad-sistem:focus-visible { outline: 3px solid color-mix(in srgb, var(--warna) 60%, transparent); outline-offset: 2px; }
 
 .kad-sistem .lencana-ikon {
   width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; position: relative;
@@ -202,6 +211,10 @@ a.kad-sistem:focus-visible { outline: 3px solid color-mix(in srgb, var(--warna) 
   transition: background .25s;
 }
 .kad-sistem .lencana-ikon .ikon { width: 28px; height: 28px; }
+/* Logo sistem (gambar penuh warna) */
+.kad-sistem .lencana-ikon.ada-logo { background: var(--permukaan-2); border: 1px solid var(--garis); }
+.kad-sistem .lencana-ikon.ada-logo img { width: 44px; height: 44px; object-fit: contain; display: block; }
+a.kad-sistem:hover .lencana-ikon.ada-logo { background: color-mix(in srgb, var(--warna) 10%, var(--permukaan-2)); border-color: color-mix(in srgb, var(--warna) 35%, var(--garis)); }
 a.kad-sistem:hover .lencana-ikon { background: color-mix(in srgb, var(--warna) 22%, transparent); }
 .label-sistem { display: inline-block; vertical-align: 3px; margin-left: 6px; font-size: 11px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: #fff4e0; color: #9a5b00; border: 1px solid #fbd99a; }
 .kad-sistem h2 { font: 700 16.5px/1.3 "Montserrat", sans-serif; letter-spacing: -.1px; }
@@ -226,15 +239,12 @@ kbd {
 .kad-sistem.membuka .lencana-ikon { animation: lompat .5s ease; }
 @keyframes lompat { 40% { transform: translateY(-6px) scale(1.06); } }
 
-/* Riak sentuhan */
-.riak { position: absolute; border-radius: 50%; transform: scale(0); background: color-mix(in srgb, var(--warna) 30%, transparent); animation: riak .6s ease-out forwards; pointer-events: none; z-index: -1; }
-@keyframes riak { to { transform: scale(1); opacity: 0; } }
 
 /* Animasi masuk */
-.muncul { animation: naik .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
-@keyframes naik { from { opacity: 0; transform: translateY(16px); } }
+.muncul { animation: naik .5s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes naik { from { opacity: 0; transform: translateY(8px); } }
 
-.tajuk-kecil { font-size: 12px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--teks-2); margin: 30px 4px 10px; }
+.tajuk-kecil { font: 700 16px/1.3 "Montserrat", sans-serif; color: var(--teks); margin: 40px 2px 14px; }
 
 .kad { background: var(--permukaan); border: 1px solid var(--garis); border-radius: 20px; padding: 18px; box-shadow: var(--bayang); }
 .kad + .kad { margin-top: 12px; }
@@ -250,10 +260,13 @@ kbd {
 /* ---------- Tahukah anda? ---------- */
 .tip { display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; position: relative; overflow: hidden; }
 .tip .emoji-tip {
-  width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 26px;
-  background: color-mix(in srgb, var(--amber) 16%, transparent);
+  width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--hijau) 12%, transparent); color: var(--hijau);
 }
-.tip .label { font-size: 12px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; color: var(--utama); }
+.tip .emoji-tip .ikon { width: 24px; height: 24px; }
+:root[data-theme="dark"] .tip .emoji-tip { color: var(--amber); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tip .emoji-tip { color: var(--amber); } }
+.tip .label { font-size: 12.5px; font-weight: 700; color: var(--teks-2); font-variant-numeric: tabular-nums; }
 .tip .teks-tip { font-size: 14.5px; color: var(--teks); margin-top: 2px; min-height: 44px; transition: opacity .3s, transform .3s; }
 .tip .teks-tip.tukar { opacity: 0; transform: translateY(6px); }
 .tip-bawah { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
@@ -276,8 +289,8 @@ kbd {
 .tutorial-kad:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--amber) 55%, var(--garis)); }
 .tutorial-kad h3 { margin: 0; }
 .tutorial-kad p { margin-top: 2px; }
-.tutorial-ikon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-size: 20px; color: #fff; background: linear-gradient(135deg, #14355f, #169b83); box-shadow: 0 6px 16px rgba(22,155,131,.3); padding-left: 3px; }
-.tutorial-kad:hover .tutorial-ikon { animation: lompat .5s ease; }
+.tutorial-ikon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #14355f, #169b83); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+.tutorial-ikon .ikon { width: 20px; height: 20px; margin-left: 2px; }
 .panah-tutorial { color: var(--teks-2); transition: transform .2s; }
 .tutorial-kad:hover .panah-tutorial { transform: translateX(3px); }
 
@@ -287,18 +300,24 @@ kbd {
   font-weight: 700; font-size: 14.5px; background: var(--btn-latar); color: var(--btn-teks);
   transition: transform .15s, box-shadow .15s;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,199,169,.3); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
 
 details summary { cursor: pointer; list-style: none; }
 details summary::-webkit-details-marker { display: none; }
-details summary h3::after { content: "+"; margin-left: auto; font-size: 20px; font-weight: 600; color: var(--teks-2); transition: transform .3s; }
-details[open] summary h3::after { transform: rotate(45deg); }
+details summary h3::after { content: ""; margin-left: auto; width: 8px; height: 8px; border: solid var(--teks-2); border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .3s cubic-bezier(.16,1,.3,1); }
+details[open] summary h3::after { transform: translateY(2px) rotate(-135deg); }
 details[open] ol { animation: naik .35s ease both; }
 
 footer { text-align: center; font-size: 12.5px; color: var(--teks-2); margin-top: 28px; }
-footer kbd { display: inline-block; position: static; height: 20px; min-width: 20px; line-height: 18px; font-size: 11px; padding: 0 5px; margin: 0 2px; }
+footer kbd { display: inline-block; position: static; height: 20px; min-width: 20px; line-height: 18px; font-size: 12px; padding: 0 5px; margin: 0 2px; }
 
 [hidden] { display: none !important; }
+
+/* Permukaan pelayar ikut jenama */
+::selection { background: color-mix(in srgb, var(--hijau) 28%, transparent); color: inherit; }
+html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) transparent; accent-color: var(--hijau); }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 6px; }
+a.kad-sistem:focus-visible { outline: 2px solid color-mix(in srgb, var(--warna) 70%, transparent); outline-offset: 3px; }
 
 @media (min-width: 720px) {
   .kepala { padding-top: 32px; padding-bottom: 108px; }
@@ -309,6 +328,8 @@ footer kbd { display: inline-block; position: static; height: 20px; min-width: 2
   .senarai-sistem { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 720px) {
+  .kad-sistem .lencana-ikon.ada-logo { width: 68px; height: 68px; border-radius: 18px; }
+  .kad-sistem .lencana-ikon.ada-logo img { width: 54px; height: 54px; }
   .kad-sistem { grid-template-columns: 1fr; align-content: start; gap: 16px; padding: 24px; min-height: 220px; }
   .kad-sistem .anak-panah { display: none; }
   .kad-sistem .buka { display: inline-flex; }
@@ -352,9 +373,9 @@ a.kad-sistem:hover .buka { gap: 10px; }
 <main>
   <section class="senarai-sistem" id="senarai-sistem" aria-label="Senarai sistem"></section>
 
-  <div class="tajuk-kecil muncul" style="--i:3">Tahukah anda?</div>
-  <section class="kad tip muncul" style="--i:4" id="tip" aria-live="polite">
-    <div class="emoji-tip" id="tip-emoji">💡</div>
+  <h2 class="tajuk-kecil">Tahukah anda?</h2>
+  <section class="kad tip" id="tip" aria-live="polite">
+    <div class="emoji-tip" id="tip-emoji" aria-hidden="true"></div>
     <div>
       <div class="label">Tip <span id="tip-no">1</span>/<span id="tip-jumlah"></span></div>
       <div class="teks-tip" id="tip-teks"></div>
@@ -369,15 +390,15 @@ a.kad-sistem:hover .buka { gap: 10px; }
     <div class="bar-masa" id="bar-masa"></div>
   </section>
 
-  <div class="tajuk-kecil muncul" style="--i:5">Panduan</div>
+  <h2 class="tajuk-kecil">Panduan</h2>
 
-  <a class="kad tutorial-kad muncul" style="--i:5" href="tutorial.html">
-    <span class="tutorial-ikon">▶</span>
+  <a class="kad tutorial-kad" href="tutorial.html">
+    <span class="tutorial-ikon" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5z"/></svg></span>
     <span><h3>Tutorial video</h3><p>Tonton cara guna e-LogKenderaan, e-PinjamAset & e-TempahanRuang langkah demi langkah sebelum mula.</p></span>
     <svg class="ikon panah-tutorial" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
   </a>
 
-  <section class="kad muncul" style="--i:6" id="kad-pasang" hidden>
+  <section class="kad" id="kad-pasang" hidden>
     <h3><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Pasang di telefon</h3>
     <div id="pasang-android" hidden>
       <p>Pasang ICC NEXIS sebagai aplikasi supaya ia sentiasa ada di skrin utama telefon anda.</p>
@@ -399,7 +420,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
     </div>
   </section>
 
-  <details class="kad muncul" style="--i:7">
+  <details class="kad">
     <summary><h3><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>Masalah log masuk?</h3></summary>
     <ol>
       <li>Pastikan anda log masuk ke Google dengan akaun <b>@uthm.edu.my</b>, bukan Gmail peribadi.</li>
@@ -409,7 +430,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
     </ol>
   </details>
 
-  <footer class="muncul" style="--i:8">ICC NEXIS · Digital Ecosystem · UTHM<span id="nota-kekunci"></span></footer>
+  <footer>ICC NEXIS · Digital Ecosystem · UTHM<span id="nota-kekunci"></span></footer>
 </main>
 
 <script>
@@ -441,7 +462,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
       const ada = dalaman || /^https:\/\//.test(s.url);
       const lepas = +ls.get('terakhir-' + i);
       const dalam =
-        '<div class="lencana-ikon">' + svg(s.ikon) + '</div>' +
+        '<div class="lencana-ikon' + (s.logo ? ' ada-logo' : '') + '">' + (s.logo ? '<img src="' + esc(s.logo) + '" alt="" loading="lazy">' : svg(s.ikon)) + '</div>' +
         '<div><h2>' + esc(s.nama) + (s.label ? ' <span class="label-sistem">' + esc(s.label) + '</span>' : '') + '</h2><p>' + (ada ? esc(s.keterangan) : 'Pautan belum ditetapkan') + '</p>' +
           '<div class="meta">' +
             (ada ? '<span class="buka"><span class="buka-teks">Buka sistem</span> ' + svg(PANAH) + '</span>' : '') +
@@ -540,7 +561,7 @@ a.kad-sistem:hover .buka { gap: 10px; }
     tipI = (i + TIP.length) % TIP.length;
     const teks = $('tip-teks');
     const isi = () => {
-      $('tip-emoji').textContent = TIP[tipI][0];
+      $('tip-emoji').innerHTML = svg(IKON_TIP[TIP[tipI][0]] || IKON_TIP.kunci);
       teks.innerHTML = TIP[tipI][1];
       $('tip-no').textContent = tipI + 1;
       teks.classList.remove('tukar');

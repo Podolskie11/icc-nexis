@@ -6,7 +6,7 @@
 <title>e-TemplateGambar · ICC NEXIS</title>
 <meta name="description" content="e-TemplateGambar — masukkan banyak gambar ke dalam frame rasmi ICC sekali gus.">
 <meta name="theme-color" content="#0f2a4d">
-<link rel="icon" href="../icons/logo.svg" type="image/svg+xml">
+<link rel="icon" href="../icons/sistem/templategambar.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -16,7 +16,7 @@
 </script>
 <style>
 :root {
-  --navy: #0f2a4d; --aksen: #3cc9a8; --warna: #8b5cf6;
+  --navy: #0f2a4d; --aksen: #3cc9a8; --warna: #7c3aed;
   --latar: #f4f6fb; --permukaan: #ffffff; --permukaan-2: #f7f8fc;
   --teks: #141a2b; --teks-2: #5b6478; --garis: #e3e7f0; --utama: #3454d1;
   --bayang: 0 1px 2px rgba(20,33,61,.06), 0 6px 22px rgba(20,33,61,.08);
@@ -51,9 +51,6 @@ button, select { font: inherit; }
 .kepala::before { content: ""; position: absolute; inset: 0; z-index: -1;
   background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.5px); background-size: 22px 22px;
   mask-image: linear-gradient(180deg, #000 30%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
-.gumpal { position: absolute; border-radius: 50%; filter: blur(40px); z-index: -1; pointer-events: none; }
-.gumpal.a { width: 300px; height: 300px; right: -90px; top: -110px; background: rgba(139,92,246,.22); }
-.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(22,155,131,.28); }
 .kepala-dalam { max-width: 960px; margin: 0 auto; }
 .bar-atas { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
 .balik { display: inline-flex; align-items: center; gap: 8px; color: #e8ecf6; text-decoration: none; font-weight: 700; font-size: 13px;
@@ -65,18 +62,18 @@ button, select { font: inherit; }
 .cip:hover { background: rgba(255,255,255,.16); }
 .cip .ikon { width: 16px; height: 16px; }
 .tajuk { display: flex; align-items: center; gap: 14px; }
-.tajuk .lencana { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(139,92,246,.22); color: #c4b5fd; flex: none; }
-.tajuk .lencana .ikon { width: 28px; height: 28px; }
+.tajuk .lencana { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: #fff; color: #c4b5fd; flex: none; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.tajuk .lencana img { width: 40px; height: 40px; object-fit: contain; display: block; }
 .kepala h1 { font: 800 26px/1.2 "Montserrat", sans-serif; letter-spacing: -.4px; }
 .kepala p { color: #b9c3dd; margin-top: 4px; font-size: 14px; }
 
 /* ---------- Kandungan ---------- */
 main { max-width: 960px; margin: -56px auto 0; padding: 0 16px calc(32px + env(safe-area-inset-bottom)); position: relative; z-index: 2; display: grid; gap: 14px; }
 .kad { background: var(--permukaan); border: 1px solid var(--garis); border-radius: 20px; padding: 18px; box-shadow: var(--bayang); min-width: 0; }
-.kad h2 { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.kad h2 { font: 700 16px/1.3 "Montserrat", sans-serif; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .langkah { width: 26px; height: 26px; border-radius: 999px; display: inline-grid; place-items: center; font-size: 13px; background: var(--warna); color: #fff; }
 .petunjuk { color: var(--teks-2); font-size: 13.5px; margin: 4px 0 14px; }
-.lencana-kecil { font-size: 11.5px; font-weight: 700; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--garis); color: var(--teks-2); }
+.lencana-kecil { font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--garis); color: var(--teks-2); }
 .lencana-kecil.ok { color: #12805c; border-color: #8fd8b9; background: #e9f8f1; }
 :root[data-theme="dark"] .lencana-kecil.ok { color: #6ee7b7; border-color: #1f6b52; background: #0f2a22; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lencana-kecil.ok { color: #6ee7b7; border-color: #1f6b52; background: #0f2a22; } }
@@ -99,12 +96,15 @@ main { max-width: 960px; margin: -56px auto 0; padding: 0 16px calc(32px + env(s
 .kawalan .pilih { grid-template-columns: 74px 1fr; }
 select { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--garis); background: var(--permukaan); color: var(--teks); min-width: 0; }
 .butang-baris { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-.lanjutan summary { cursor: pointer; font-weight: 700; color: var(--teks-2); font-size: 13.5px; }
+.lanjutan summary { cursor: pointer; font-weight: 700; color: var(--teks-2); font-size: 13.5px; list-style: none; display: flex; align-items: center; gap: 10px; }
+.lanjutan summary::-webkit-details-marker { display: none; }
+.lanjutan summary::after { content: ""; margin-left: auto; width: 7px; height: 7px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .3s cubic-bezier(.16,1,.3,1); }
+.lanjutan[open] summary::after { transform: translateY(2px) rotate(-135deg); }
 .lanjutan[open] summary { margin-bottom: 10px; }
 
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 18px; border-radius: 12px; border: 0;
   cursor: pointer; font-weight: 700; font-size: 14px; background: var(--btn-latar); color: var(--btn-teks); transition: transform .15s, box-shadow .15s; }
-.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(34,199,169,.3); }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
 .btn.hantu { background: var(--permukaan-2); color: var(--teks); border: 1px solid var(--garis); }
 .btn.hantu:hover { box-shadow: none; }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -114,16 +114,20 @@ select { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--garis);
 .alat .ruang { flex: 1; }
 .alat label { font-size: 13.5px; color: var(--teks-2); display: flex; align-items: center; gap: 8px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-.item { border: 1px solid var(--garis); border-radius: 14px; overflow: hidden; background: var(--permukaan-2); animation: naik .4s cubic-bezier(.2,.8,.2,1) both; }
-@keyframes naik { from { opacity: 0; transform: translateY(10px); } }
+.item { border: 1px solid var(--garis); border-radius: 14px; overflow: hidden; background: var(--permukaan-2); animation: naik .45s cubic-bezier(.16,1,.3,1) both; }
+@keyframes naik { from { opacity: 0; transform: translateY(6px); } }
 .item img { width: 100%; display: block; }
 .item .meta { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 8px 10px; }
 .item .meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--teks-2); font-size: 12.5px; }
-.item .meta .btn { min-height: 32px; padding: 0 10px; font-size: 12.5px; border-radius: 9px; }
+.item .meta .btn { min-height: 32px; padding: 0 10px; font-size: 12.5px; border-radius: 9px; white-space: nowrap; flex: none; }
 .kosong { color: var(--teks-2); font-size: 14px; text-align: center; padding: 24px 10px; }
 footer { text-align: center; font-size: 12.5px; color: var(--teks-2); margin-top: 6px; }
 footer a { color: inherit; }
 [hidden] { display: none !important; }
+::selection { background: color-mix(in srgb, #169b83 28%, transparent); color: inherit; }
+html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) transparent; accent-color: #169b83; }
+:focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; border-radius: 6px; }
+.item .meta .btn .ikon { width: 15px; height: 15px; }
 @media (min-width: 720px) { .kepala h1 { font-size: 32px; } .kepala { padding-bottom: 96px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
@@ -131,14 +135,13 @@ footer a { color: inherit; }
 <body>
 
 <header class="kepala">
-  <span class="gumpal a"></span><span class="gumpal b"></span>
   <div class="kepala-dalam">
     <div class="bar-atas">
       <a class="balik" href="../"><img src="../icons/logo-putih.svg" alt="">ICC NEXIS</a>
       <button class="cip" id="btn-tema" type="button" aria-label="Tukar tema" title="Tukar tema cerah / gelap"></button>
     </div>
     <div class="tajuk">
-      <div class="lencana"><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/></svg></div>
+      <div class="lencana"><img src="../icons/sistem/templategambar.png" alt=""></div>
       <div>
         <h1>e-TemplateGambar</h1>
         <p>Masukkan banyak gambar ke dalam frame rasmi ICC sekali gus. Semua diproses dalam pelayar anda, tiada gambar dimuat naik ke mana-mana.</p>
@@ -351,7 +354,7 @@ footer a { color: inherit; }
       const nm = document.createElement('span'); nm.textContent = g.nama; nm.title = g.nama;
       const dl = document.createElement('button'); dl.className = 'btn'; dl.type = 'button'; dl.textContent = 'Muat turun';
       dl.onclick = async () => muatTurun(await keBlob(gabung(g.img)), namaKeluar(g.nama));
-      const bu = document.createElement('button'); bu.className = 'btn hantu'; bu.type = 'button'; bu.textContent = '✕'; bu.title = 'Buang';
+      const bu = document.createElement('button'); bu.className = 'btn hantu'; bu.type = 'button'; bu.innerHTML = svg('<path d="M18 6 6 18M6 6l12 12"/>'); bu.title = 'Buang'; bu.setAttribute('aria-label', 'Buang ' + g.nama);
       bu.onclick = () => { gambar.splice(i, 1); paparSemua(); };
       const bt = document.createElement('div'); bt.style.cssText = 'display:flex;gap:6px';
       bt.append(dl, bu); meta.append(nm, bt); el.append(im, meta); grid.append(el);

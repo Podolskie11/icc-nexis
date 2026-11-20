@@ -1,6 +1,6 @@
 // Service worker: simpan rangka Portal supaya ia dibuka pantas & boleh dipasang sebagai app.
 // Naikkan VERSI setiap kali index.html dikemas kini supaya telefon pengguna dapat versi baharu.
-const VERSI = 'icc-nexis-v10';
+const VERSI = 'icc-nexis-v12';
 const FAIL = [
   './',
   './index.html',
@@ -13,7 +13,11 @@ const FAIL = [
   './icons/logo.svg',
   './icons/logo-maskable.svg',
   './icons/logo-putih.svg',
-  './icons/logo-mark.svg'
+  './icons/logo-mark.svg',
+  './icons/sistem/pinjamaset.png',
+  './icons/sistem/logkenderaan.png',
+  './icons/sistem/tempahanruang.png',
+  './icons/sistem/templategambar.png'
 ];
 
 self.addEventListener('install', e => {
