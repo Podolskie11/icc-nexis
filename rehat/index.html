@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kejar Kertas · ICC NEXIS</title>
+<meta name="description" content="Kejar Kertas — permainan rehat ICC NEXIS. Tangkap kertas, jadikan digital, elak kopi tumpah.">
+<meta name="theme-color" content="#0f2a4d">
+<link rel="icon" href="../icons/favicon-32.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  try { const t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+:root {
+  --navy: #0f2a4d; --hijau: #169b83; --aksen: #3cc9a8; --emas: #f2b233; --bahaya: #d23b3b;
+  --latar: #f4f6fb; --permukaan: #ffffff; --permukaan-2: #f7f8fc; --padang: #eef3f8; --grid: #dfe7ef;
+  --teks: #141a2b; --teks-2: #5b6478; --garis: #e3e7f0;
+  --bayang: 0 1px 2px rgba(20,33,61,.06), 0 6px 22px rgba(20,33,61,.08);
+  --btn-latar: var(--navy); --btn-teks: #fff;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --latar: #0b1626; --permukaan: #122238; --permukaan-2: #172a44; --padang: #0f1d31; --grid: #1a2b44;
+    --teks: #e8ecf6; --teks-2: #9aa4bd; --garis: #27314d;
+    --bayang: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.3);
+    --btn-latar: var(--aksen); --btn-teks: var(--navy);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --latar: #0b1626; --permukaan: #122238; --permukaan-2: #172a44; --padang: #0f1d31; --grid: #1a2b44;
+  --teks: #e8ecf6; --teks-2: #9aa4bd; --garis: #27314d;
+  --bayang: 0 1px 2px rgba(0,0,0,.3), 0 6px 22px rgba(0,0,0,.3);
+  --btn-latar: var(--aksen); --btn-teks: var(--navy);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--latar); color: var(--teks);
+       font: 15px/1.5 "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif; }
+h1, h2, p { margin: 0; }
+button { font: inherit; }
+.ikon { width: 20px; height: 20px; flex: none; }
+
+/* ---------- Kepala ---------- */
+.kepala { background: linear-gradient(160deg, var(--navy) 0%, #12345e 100%); color: #fff; padding: calc(env(safe-area-inset-top) + 16px) 16px 72px; position: relative; overflow: hidden; isolation: isolate; }
+.kepala::before { content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.5px); background-size: 22px 22px;
+  mask-image: linear-gradient(180deg, #000 30%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
+.kepala-dalam { max-width: 520px; margin: 0 auto; }
+.bar-atas { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.balik { display: inline-flex; align-items: center; gap: 8px; color: #e8ecf6; text-decoration: none; font-weight: 700; font-size: 13px;
+  height: 36px; padding: 0 14px 0 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); margin-right: auto; }
+.balik:hover { background: rgba(255,255,255,.16); }
+.balik img { height: 16px; width: auto; }
+.cip { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; cursor: pointer;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #e8ecf6; }
+.cip:hover { background: rgba(255,255,255,.16); }
+.cip .ikon { width: 16px; height: 16px; }
+.kepala h1 { font: 800 26px/1.2 "Montserrat", sans-serif; letter-spacing: -.4px; }
+.kepala p { color: #b9c3dd; margin-top: 4px; font-size: 14px; }
+
+/* ---------- Permainan ---------- */
+main { max-width: 520px; margin: -52px auto 0; padding: 0 16px calc(28px + env(safe-area-inset-bottom)); position: relative; z-index: 2; display: grid; gap: 14px; }
+.kad { background: var(--permukaan); border: 1px solid var(--garis); border-radius: 20px; padding: 14px; box-shadow: var(--bayang); }
+.hud { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 10px; }
+.hud div { background: var(--permukaan-2); border: 1px solid var(--garis); border-radius: 12px; padding: 6px 12px; }
+.hud small { display: block; font-size: 11.5px; font-weight: 700; color: var(--teks-2); text-transform: uppercase; letter-spacing: .4px; }
+.hud b { font: 800 20px/1.2 "Montserrat", sans-serif; font-variant-numeric: tabular-nums; }
+.nyawa { display: flex; gap: 4px; align-items: center; height: 24px; }
+.nyawa i { width: 14px; height: 18px; border-radius: 3px; background: var(--hijau); display: block; transition: background .2s, transform .2s; }
+.nyawa i.hilang { background: var(--garis); transform: scale(.85); }
+.padang { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--garis); background: var(--padang); }
+canvas { display: block; width: 100%; aspect-ratio: 3 / 4; max-height: calc(100svh - 260px); min-height: 360px; touch-action: none; cursor: none; }
+.lapisan { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; text-align: center;
+  background: color-mix(in srgb, var(--padang) 82%, transparent); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.lapisan h2 { font: 800 24px/1.2 "Montserrat", sans-serif; }
+.lapisan p { color: var(--teks-2); font-size: 14px; margin-top: 6px; }
+.skor-akhir { font: 800 48px/1 "Montserrat", sans-serif; margin: 10px 0 2px; font-variant-numeric: tabular-nums; }
+.rekod { display: inline-block; margin-top: 8px; font-size: 12.5px; font-weight: 700; padding: 3px 12px; border-radius: 999px; color: #fff; background: var(--hijau); }
+.legenda { display: grid; gap: 8px; margin: 16px auto 4px; text-align: left; font-size: 13.5px; max-width: 270px; }
+.legenda > span { display: flex; align-items: center; gap: 10px; }
+.legenda svg { width: 26px; height: 26px; flex: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 24px; border-radius: 12px; border: 0;
+  cursor: pointer; font-weight: 700; font-size: 15px; background: var(--btn-latar); color: var(--btn-teks); margin-top: 16px; transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+.nota { color: var(--teks-2); font-size: 12.5px; text-align: center; }
+kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(--garis); border-bottom-width: 2px; border-radius: 6px; padding: 2px 5px; background: var(--permukaan-2); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="kepala">
+  <div class="kepala-dalam">
+    <div class="bar-atas">
+      <a class="balik" href="../"><img src="../icons/logo-putih.svg" alt="">ICC NEXIS</a>
+      <button class="cip" id="btn-bunyi" type="button" aria-label="Bunyi" title="Hidup / matikan bunyi"></button>
+      <button class="cip" id="btn-tema" type="button" aria-label="Tukar tema" title="Tukar tema cerah / gelap"></button>
+    </div>
+    <h1>Kejar Kertas</h1>
+    <p>Rehat sekejap. Tangkap kertas, jadikan digital, jangan sampai kopi tumpah.</p>
+  </div>
+</header>
+
+<main>
+  <section class="kad">
+    <div class="hud">
+      <div><small>Skor</small><b id="skor">0</b></div>
+      <div><small>Terbaik</small><b id="terbaik">0</b></div>
+      <div><small>Nyawa</small><span class="nyawa" id="nyawa" aria-label="3 nyawa"><i></i><i></i><i></i></span></div>
+    </div>
+    <div class="padang">
+      <canvas id="kanvas" aria-label="Padang permainan Kejar Kertas"></canvas>
+
+      <div class="lapisan" id="skrin-mula">
+        <div>
+          <h2>Kejar Kertas</h2>
+          <p>Gerakkan tablet untuk menangkap kertas sebelum jatuh.</p>
+          <div class="legenda">
+            <span><svg viewBox="0 0 26 26"><rect x="5" y="2" width="16" height="22" rx="2" fill="#fff" stroke="#9aa4bd"/><path d="M8 9h10M8 13h10M8 17h7" stroke="#9aa4bd" stroke-width="1.5"/></svg><span><b>Kertas</b> +1. Terlepas = hilang nyawa</span></span>
+            <span><svg viewBox="0 0 26 26"><path d="M2 7h8l2 3h12v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z" fill="#f2b233"/></svg><span><b>Fail</b> +5. Jarang muncul</span></span>
+            <span><svg viewBox="0 0 26 26"><path d="M5 10h13v8a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z" fill="#8a5a3b"/><path d="M18 12h2a3 3 0 0 1 0 6h-2" fill="none" stroke="#8a5a3b" stroke-width="2"/><path d="M9 3c-1 2 1 3 0 5M13 3c-1 2 1 3 0 5" stroke="#9aa4bd" stroke-width="1.5" fill="none"/></svg><span><b>Kopi</b> elak! Tertangkap = hilang nyawa</span></span>
+          </div>
+          <p>Tangkap berturut-turut untuk gandaan skor.</p>
+          <button class="btn" id="btn-mula" type="button">Main</button>
+        </div>
+      </div>
+
+      <div class="lapisan" id="skrin-jeda" hidden>
+        <div>
+          <h2>Dijeda</h2>
+          <p>Tekan untuk sambung.</p>
+          <button class="btn" id="btn-sambung" type="button">Sambung</button>
+        </div>
+      </div>
+
+      <div class="lapisan" id="skrin-tamat" hidden>
+        <div>
+          <h2>Tamat!</h2>
+          <div class="skor-akhir" id="skor-akhir">0</div>
+          <p id="kertas-akhir"></p>
+          <span class="rekod" id="rekod-baru" hidden>Rekod baharu!</span>
+          <div><button class="btn" id="btn-lagi" type="button">Main lagi</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <p class="nota">Telefon: seret jari di padang. Komputer: tetikus atau <span style="white-space:nowrap"><kbd>←</kbd> <kbd>→</kbd></span>, <span style="white-space:nowrap"><kbd>P</kbd> untuk jeda.</span><br>Skor terbaik disimpan dalam peranti ini sahaja.</p>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const ls = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  const svg = p => '<svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>';
+  const kurangGerak = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Tema (dikongsi dengan ICC NEXIS) ---------- */
+  const IKON_TEMA = {
+    light: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    dark: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
+  };
+  const temaSemasa = () => document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const lukisTema = () => { $('btn-tema').innerHTML = svg(IKON_TEMA[temaSemasa()]); bacaWarna(); if (!jalan) lukis(); };
+  $('btn-tema').addEventListener('click', () => {
+    const t = temaSemasa() === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t; ls.set('tema', t); lukisTema();
+  });
+
+  /* ---------- Bunyi (WebAudio ringkas, tiada fail) ---------- */
+  let bunyi = ls.get('kejar.bunyi') !== '0', audio = null;
+  const IKON_BUNYI = {
+    on: '<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
+    off: '<path d="M11 5L6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/>'
+  };
+  const lukisBunyi = () => { $('btn-bunyi').innerHTML = svg(IKON_BUNYI[bunyi ? 'on' : 'off']); $('btn-bunyi').setAttribute('aria-pressed', bunyi); };
+  $('btn-bunyi').addEventListener('click', () => { bunyi = !bunyi; ls.set('kejar.bunyi', bunyi ? '1' : '0'); lukisBunyi(); });
+  function bip(f, t = .08, jenis = 'sine', vol = .06) {
+    if (!bunyi) return;
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      const o = audio.createOscillator(), g = audio.createGain(), n = audio.currentTime;
+      o.type = jenis; o.frequency.setValueAtTime(f, n);
+      g.gain.setValueAtTime(vol, n); g.gain.exponentialRampToValueAtTime(.0001, n + t);
+      o.connect(g).connect(audio.destination); o.start(n); o.stop(n + t);
+    } catch (e) {}
+  }
+
+  /* ---------- Kanvas ---------- */
+  const W = 360, H = 480;                 // saiz logik padang
+  const kv = $('kanvas'), cx = kv.getContext('2d');
+  let skala = 1, warna = {};
+  function bacaWarna() {
+    const s = getComputedStyle(document.documentElement), v = n => s.getPropertyValue(n).trim();
+    warna = { padang: v('--padang'), grid: v('--grid'), teks: v('--teks'), teks2: v('--teks-2'), hijau: v('--hijau'),
+              aksen: v('--aksen'), navy: v('--navy'), emas: v('--emas'), bahaya: v('--bahaya'), garis: v('--garis'),
+              gelap: temaSemasa() === 'dark' };
+  }
+  function saiz() {
+    const r = kv.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    kv.width = Math.round(r.width * dpr); kv.height = Math.round(r.height * dpr);
+    skala = kv.width / W;
+    ketinggian = kv.height / skala;       // padang boleh lebih tinggi/rendah ikut skrin
+    pemain.y = ketinggian - 34;
+    if (!jalan) lukis();
+  }
+  let ketinggian = H;
+
+  /* ---------- Keadaan permainan ---------- */
+  const pemain = { x: W / 2, y: H - 34, w: 78, h: 14, sasaran: W / 2 };
+  let barang = [], teksTerapung = [], skor = 0, nyawa = 3, rentetan = 0, kertasDitangkap = 0;
+  let jalan = false, jeda = false, masaLepas = 0, kiraMuncul = 0, masaMain = 0, goncang = 0, kilat = 0;
+  let terbaik = +ls.get('kejar.terbaik') || 0;
+  const kekunci = { kiri: false, kanan: false };
+  $('terbaik').textContent = terbaik;
+
+  const gandaan = () => Math.min(4, 1 + Math.floor(rentetan / 10));
+  const tahap = () => Math.min(1, masaMain / 90);            // 0 → 1 dalam 90 saat
+
+  function mula() {
+    barang = []; teksTerapung = []; skor = 0; nyawa = 3; rentetan = 0; kertasDitangkap = 0;
+    masaMain = 0; kiraMuncul = 0; goncang = 0; kilat = 0;
+    pemain.x = pemain.sasaran = W / 2;
+    kemasHud();
+    $('skrin-mula').hidden = $('skrin-tamat').hidden = $('skrin-jeda').hidden = true;
+    jalan = true; jeda = false; masaLepas = performance.now();
+    bip(520, .1, 'triangle');
+    requestAnimationFrame(gelung);
+  }
+
+  function tamat() {
+    jalan = false;
+    const rekod = skor > terbaik;
+    if (rekod) { terbaik = skor; ls.set('kejar.terbaik', terbaik); $('terbaik').textContent = terbaik; }
+    $('skor-akhir').textContent = skor;
+    $('kertas-akhir').textContent = kertasDitangkap + ' helai kertas didigitalkan';
+    $('rekod-baru').hidden = !rekod;
+    $('skrin-tamat').hidden = false;
+    bip(220, .35, 'sawtooth', .05);
+    setTimeout(() => $('btn-lagi').focus(), 50);
+  }
+
+  function setJeda(j) {
+    if (!jalan) return;
+    jeda = j; $('skrin-jeda').hidden = !j;
+    if (!j) { masaLepas = performance.now(); requestAnimationFrame(gelung); }
+  }
+
+  function kemasHud() {
+    $('skor').textContent = skor;
+    [...$('nyawa').children].forEach((el, i) => el.classList.toggle('hilang', i >= nyawa));
+    $('nyawa').setAttribute('aria-label', nyawa + ' nyawa');
+  }
+
+  function muncul() {
+    const t = tahap(), r = Math.random();
+    const kopi = .12 + .14 * t, fail = .07;
+    const jenis = r < kopi ? 'kopi' : r < kopi + fail ? 'fail' : 'kertas';
+    const lebar = jenis === 'fail' ? 30 : 24;
+    barang.push({
+      jenis, x: 18 + Math.random() * (W - 36), y: -30, w: lebar, h: 30,
+      vy: (110 + 170 * t) * (jenis === 'fail' ? 1.15 : 1) * (.85 + Math.random() * .3),
+      vx: jenis === 'kertas' ? (Math.random() - .5) * 30 : 0,
+      putar: (Math.random() - .5) * .5, vputar: (Math.random() - .5) * 1.6, ayun: Math.random() * 6
+    });
+  }
+
+  function apung(x, y, teks, w) { teksTerapung.push({ x, y, teks, w, hayat: .9 }); }
+
+  function kemaskini(dt) {
+    masaMain += dt;
+    // Gerakan pemain
+    const laju = 440;
+    if (kekunci.kiri) pemain.sasaran -= laju * dt;
+    if (kekunci.kanan) pemain.sasaran += laju * dt;
+    pemain.sasaran = Math.max(pemain.w / 2 + 4, Math.min(W - pemain.w / 2 - 4, pemain.sasaran));
+    pemain.x += (pemain.sasaran - pemain.x) * Math.min(1, dt * 18);
+
+    // Kemunculan
+    kiraMuncul -= dt;
+    if (kiraMuncul <= 0) { muncul(); kiraMuncul = (.95 - .55 * tahap()) * (.75 + Math.random() * .5); }
+
+    const atas = pemain.y - pemain.h / 2;
+    for (let i = barang.length - 1; i >= 0; i--) {
+      const b = barang[i];
+      b.ayun += dt * 3;
+      b.y += b.vy * dt;
+      b.x += (b.vx + (b.jenis === 'kertas' ? Math.sin(b.ayun) * 22 : 0)) * dt;
+      b.x = Math.max(14, Math.min(W - 14, b.x));
+      b.putar += b.vputar * dt;
+      const bawah = b.y + b.h / 2;
+      if (bawah >= atas && b.y < pemain.y + 4 && Math.abs(b.x - pemain.x) < pemain.w / 2 + b.w / 2 - 4) {
+        barang.splice(i, 1);
+        if (b.jenis === 'kopi') {
+          nyawa--; rentetan = 0; goncang = kurangGerak ? 0 : .3; kilat = .35;
+          apung(b.x, atas - 10, 'Tumpah!', warna.bahaya); bip(160, .25, 'square', .05);
+        } else {
+          rentetan++;
+          const nilai = (b.jenis === 'fail' ? 5 : 1) * gandaan();
+          skor += nilai; if (b.jenis === 'kertas') kertasDitangkap++;
+          apung(b.x, atas - 10, '+' + nilai, b.jenis === 'fail' ? warna.emas : warna.hijau);
+          bip(b.jenis === 'fail' ? 880 : 620 + Math.min(rentetan, 30) * 12, .07, 'triangle');
+          if (rentetan > 0 && rentetan % 10 === 0 && gandaan() > 1) { apung(W / 2, ketinggian / 2, 'Gandaan x' + gandaan(), warna.aksen); bip(990, .15, 'triangle'); }
+        }
+        kemasHud();
+        if (nyawa <= 0) return tamat();
+        continue;
+      }
+      if (b.y - b.h / 2 > ketinggian) {
+        barang.splice(i, 1);
+        if (b.jenis === 'kertas') {
+          nyawa--; rentetan = 0; kilat = .35;
+          apung(b.x, ketinggian - 60, 'Terlepas', warna.bahaya); bip(200, .2, 'square', .04);
+          kemasHud();
+          if (nyawa <= 0) return tamat();
+        }
+      }
+    }
+    for (let i = teksTerapung.length - 1; i >= 0; i--) {
+      const t = teksTerapung[i]; t.hayat -= dt; t.y -= 40 * dt;
+      if (t.hayat <= 0) teksTerapung.splice(i, 1);
+    }
+    goncang = Math.max(0, goncang - dt);
+    kilat = Math.max(0, kilat - dt);
+  }
+
+  /* ---------- Lukisan ---------- */
+  function bulat(x, y, w, h, r) { cx.beginPath(); cx.roundRect ? cx.roundRect(x, y, w, h, r) : cx.rect(x, y, w, h); }
+
+  function lukisKertas(b) {
+    cx.save(); cx.translate(b.x, b.y); cx.rotate(b.putar);
+    const w = b.w, h = b.h;
+    cx.fillStyle = '#ffffff'; cx.strokeStyle = warna.gelap ? '#4b5a78' : '#b8c1d1'; cx.lineWidth = 1;
+    cx.beginPath(); cx.moveTo(-w / 2, -h / 2); cx.lineTo(w / 2 - 7, -h / 2); cx.lineTo(w / 2, -h / 2 + 7); cx.lineTo(w / 2, h / 2); cx.lineTo(-w / 2, h / 2); cx.closePath();
+    cx.fill(); cx.stroke();
+    cx.fillStyle = '#dfe4ee'; cx.beginPath(); cx.moveTo(w / 2 - 7, -h / 2); cx.lineTo(w / 2 - 7, -h / 2 + 7); cx.lineTo(w / 2, -h / 2 + 7); cx.closePath(); cx.fill();
+    cx.strokeStyle = '#c3cad8'; cx.lineWidth = 1.5;
+    [-5, 0, 5].forEach((dy, i) => { cx.beginPath(); cx.moveTo(-w / 2 + 5, dy); cx.lineTo(w / 2 - (i === 2 ? 10 : 5), dy); cx.stroke(); });
+    cx.restore();
+  }
+  function lukisFail(b) {
+    cx.save(); cx.translate(b.x, b.y); cx.rotate(b.putar * .4);
+    const w = b.w, h = b.h - 6;
+    cx.fillStyle = '#d99a1e'; bulat(-w / 2, -h / 2 - 4, w * .45, 8, 3); cx.fill();
+    cx.fillStyle = warna.emas; bulat(-w / 2, -h / 2, w, h, 4); cx.fill();
+    cx.fillStyle = 'rgba(255,255,255,.35)'; cx.fillRect(-w / 2 + 4, -h / 2 + 4, w - 8, 3);
+    cx.fillStyle = '#7a4f00'; cx.font = '800 11px Montserrat, sans-serif'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    cx.fillText('+5', 0, 2);
+    cx.restore();
+  }
+  function lukisKopi(b) {
+    cx.save(); cx.translate(b.x, b.y);
+    cx.strokeStyle = warna.teks2; cx.lineWidth = 1.5; cx.globalAlpha = .7;
+    [-4, 3].forEach(dx => { cx.beginPath(); cx.moveTo(dx, -16); cx.quadraticCurveTo(dx - 4, -20 - Math.sin(b.ayun) * 2, dx, -24); cx.stroke(); });
+    cx.globalAlpha = 1;
+    cx.fillStyle = '#8a5a3b'; bulat(-10, -10, 20, 22, [2, 2, 8, 8]); cx.fill();
+    cx.strokeStyle = '#8a5a3b'; cx.lineWidth = 3; cx.beginPath(); cx.arc(11, 0, 5, -Math.PI / 2, Math.PI / 2); cx.stroke();
+    cx.fillStyle = '#5c3a24'; cx.fillRect(-10, -10, 20, 4);
+    cx.restore();
+  }
+  function lukisPemain() {
+    const { x, y, w, h } = pemain;
+    cx.fillStyle = 'rgba(0,0,0,.12)'; bulat(x - w / 2 + 3, y - h / 2 + 5, w, h, 7); cx.fill();
+    cx.fillStyle = warna.navy; bulat(x - w / 2, y - h / 2, w, h, 7); cx.fill();
+    cx.fillStyle = warna.aksen; bulat(x - w / 2 + 5, y - h / 2 + 3, w - 10, h - 6, 3); cx.fill();
+    // ikon awan kecil = "digital"
+    cx.fillStyle = warna.navy;
+    cx.beginPath(); cx.arc(x - 4, y + 1, 3, 0, Math.PI * 2); cx.arc(x + 1, y - 1, 4, 0, Math.PI * 2); cx.arc(x + 6, y + 1, 3, 0, Math.PI * 2); cx.fill();
+  }
+  function lukis() {
+    if (!kv.width) return;
+    cx.setTransform(skala, 0, 0, skala, 0, 0);
+    if (goncang > 0) cx.translate((Math.random() - .5) * 8 * goncang / .3, 0);
+    cx.fillStyle = warna.padang; cx.fillRect(-10, -10, W + 20, ketinggian + 20);
+    // grid halus
+    cx.strokeStyle = warna.grid; cx.lineWidth = 1;
+    for (let gx = 30; gx < W; gx += 30) { cx.beginPath(); cx.moveTo(gx, 0); cx.lineTo(gx, ketinggian); cx.stroke(); }
+    // lantai
+    cx.fillStyle = warna.garis; cx.fillRect(0, ketinggian - 10, W, 10);
+    if (kilat > 0) { cx.fillStyle = warna.bahaya; cx.globalAlpha = kilat * .5; cx.fillRect(0, ketinggian - 10, W, 10); cx.globalAlpha = 1; }
+
+    barang.forEach(b => b.jenis === 'kertas' ? lukisKertas(b) : b.jenis === 'fail' ? lukisFail(b) : lukisKopi(b));
+    lukisPemain();
+
+    cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    teksTerapung.forEach(t => {
+      cx.globalAlpha = Math.min(1, t.hayat / .4);
+      cx.fillStyle = t.w; cx.font = '800 16px Montserrat, sans-serif'; cx.fillText(t.teks, t.x, t.y);
+    });
+    cx.globalAlpha = 1;
+    if (jalan && gandaan() > 1) {
+      cx.textAlign = 'right'; cx.fillStyle = warna.hijau; cx.font = '800 14px Montserrat, sans-serif';
+      cx.fillText('x' + gandaan() + ' · ' + rentetan + ' berturut', W - 12, 16);
+    }
+  }
+
+  function gelung(sekarang) {
+    if (!jalan || jeda) return;
+    const dt = Math.min(.05, (sekarang - masaLepas) / 1000); masaLepas = sekarang;
+    kemaskini(dt);
+    lukis();
+    if (jalan) requestAnimationFrame(gelung);
+  }
+
+  /* ---------- Kawalan ---------- */
+  const keX = e => { const r = kv.getBoundingClientRect(); return (e.clientX - r.left) / r.width * W; };
+  kv.addEventListener('pointerdown', e => { pemain.sasaran = keX(e); });
+  kv.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons || e.pressure > 0) pemain.sasaran = keX(e); });
+  addEventListener('keydown', e => {
+    const k = e.key.toLowerCase();
+    if (k === 'arrowleft' || k === 'a') { kekunci.kiri = true; e.preventDefault(); }
+    else if (k === 'arrowright' || k === 'd') { kekunci.kanan = true; e.preventDefault(); }
+    else if (k === 'p' || k === 'escape') setJeda(!jeda);
+    else if ((k === ' ' || k === 'enter') && !jalan && document.activeElement.tagName !== 'BUTTON') { e.preventDefault(); mula(); }
+  });
+  addEventListener('keyup', e => {
+    const k = e.key.toLowerCase();
+    if (k === 'arrowleft' || k === 'a') kekunci.kiri = false;
+    if (k === 'arrowright' || k === 'd') kekunci.kanan = false;
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && jalan && !jeda) setJeda(true); });
+  addEventListener('blur', () => { kekunci.kiri = kekunci.kanan = false; });
+  $('btn-mula').addEventListener('click', mula);
+  $('btn-lagi').addEventListener('click', mula);
+  $('btn-sambung').addEventListener('click', () => setJeda(false));
+  addEventListener('resize', saiz);
+
+  bacaWarna(); lukisBunyi(); lukisTema(); saiz();
+  document.fonts && document.fonts.ready.then(() => { if (!jalan) lukis(); });
+})();
+</script>
+</body>
+</html>

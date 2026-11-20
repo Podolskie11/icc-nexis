@@ -291,6 +291,8 @@ kbd {
 .tutorial-kad p { margin-top: 2px; }
 .tutorial-ikon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #14355f, #169b83); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
 .tutorial-ikon .ikon { width: 20px; height: 20px; margin-left: 2px; }
+.tutorial-ikon.ikon-rehat { background: linear-gradient(135deg, #169b83, #3cc9a8); }
+.tutorial-ikon.ikon-rehat .ikon { width: 24px; height: 24px; margin-left: 0; }
 .panah-tutorial { color: var(--teks-2); transition: transform .2s; }
 .tutorial-kad:hover .panah-tutorial { transform: translateX(3px); }
 
@@ -429,6 +431,14 @@ a.kad-sistem:hover .buka { gap: 10px; }
       <li>Setiap sistem ada peranannya sendiri. Akses di satu sistem tidak bermaksud akses di sistem lain.</li>
     </ol>
   </details>
+
+  <h2 class="tajuk-kecil">Rehat sekejap</h2>
+
+  <a class="kad tutorial-kad" href="rehat/">
+    <span class="tutorial-ikon ikon-rehat" aria-hidden="true"><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="12" rx="4"/><path d="M7 11v4M5 13h4"/><circle cx="16" cy="12" r=".6" fill="currentColor"/><circle cx="18" cy="14.5" r=".6" fill="currentColor"/></svg></span>
+    <span><h3>Kejar Kertas</h3><p id="rehat-teks">Permainan ringkas: tangkap kertas, jadikan digital, elak kopi tumpah.</p></span>
+    <svg class="ikon panah-tutorial" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </a>
 
   <footer>ICC NEXIS · Digital Ecosystem · UTHM<span id="nota-kekunci"></span></footer>
 </main>
@@ -611,6 +621,12 @@ a.kad-sistem:hover .buka { gap: 10px; }
     tawaran = null;
   });
   addEventListener('appinstalled', () => { kadPasang.hidden = true; });
+
+  // Kejar Kertas: tunjuk skor terbaik pada peranti ini
+  try {
+    const terbaik = +localStorage.getItem('kejar.terbaik') || 0;
+    if (terbaik > 0) document.getElementById('rehat-teks').textContent = 'Skor terbaik anda: ' + terbaik + '. Boleh pecahkan rekod sendiri?';
+  } catch (e) {}
 
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
