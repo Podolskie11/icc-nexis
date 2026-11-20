@@ -149,6 +149,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
             <span><svg viewBox="0 0 26 26"><rect x="5" y="2" width="16" height="22" rx="2" fill="#fff" stroke="#9aa4bd"/><path d="M8 9h10M8 13h10M8 17h7" stroke="#9aa4bd" stroke-width="1.5"/></svg><span><b>Kertas</b> +1. Terlepas = hilang nyawa</span></span>
             <span><svg viewBox="0 0 26 26"><path d="M2 7h8l2 3h12v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z" fill="#f2b233"/></svg><span><b>Fail</b> +5. Jarang muncul</span></span>
             <span><svg viewBox="0 0 26 26"><path d="M5 10h13v8a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5z" fill="#8a5a3b"/><path d="M18 12h2a3 3 0 0 1 0 6h-2" fill="none" stroke="#8a5a3b" stroke-width="2"/><path d="M9 3c-1 2 1 3 0 5M13 3c-1 2 1 3 0 5" stroke="#9aa4bd" stroke-width="1.5" fill="none"/></svg><span><b>Kopi</b> elak! Tertangkap = hilang nyawa</span></span>
+            <span><svg viewBox="0 0 26 26"><path d="M13 23C3 16 2 9 7 6c3-2 5 0 6 2 1-2 3-4 6-2 5 3 4 10-6 17z" fill="#e5486b"/></svg><span><b>Nyawa</b> +1 (maksimum 5). Sangat jarang</span></span>
           </div>
           <p>Tangkap berturut-turut untuk gandaan skor.</p>
           <button class="btn" id="btn-mula" type="button">Main</button>
@@ -198,7 +199,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     <svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
   </a>
 
-  <p class="nota">Telefon: seret jari di padang. Komputer: tetikus atau <span style="white-space:nowrap"><kbd>←</kbd> <kbd>→</kbd></span>, <span style="white-space:nowrap"><kbd>P</kbd> untuk jeda.</span><br><span id="nota-simpan">Skor terbaik disimpan dalam peranti ini sahaja.</span></p>
+  <p class="nota">Telefon: seret jari di padang. Komputer: tetikus, <span style="white-space:nowrap"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span> atau anak panah, <span style="white-space:nowrap"><kbd>P</kbd> untuk jeda.</span><br><span id="nota-simpan">Skor terbaik disimpan dalam peranti ini sahaja.</span></p>
 </main>
 
 <script>
@@ -257,17 +258,19 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     kv.width = Math.round(r.width * dpr); kv.height = Math.round(r.height * dpr);
     skala = kv.width / W;
     ketinggian = kv.height / skala;       // padang boleh lebih tinggi/rendah ikut skrin
-    pemain.y = ketinggian - 34;
+    pemain.yBawah = ketinggian - 34;
+    pemain.y = pemain.sasaranY = pemain.yBawah;
     if (!jalan) lukis();
   }
   let ketinggian = H;
 
   /* ---------- Keadaan permainan ---------- */
-  const pemain = { x: W / 2, y: H - 34, w: 78, h: 14, sasaran: W / 2 };
+  const pemain = { x: W / 2, y: H - 34, yBawah: H - 34, w: 78, h: 14, sasaran: W / 2, sasaranY: H - 34 };
+  const NYAWA_MAKS = 5;
   let barang = [], teksTerapung = [], skor = 0, nyawa = 3, rentetan = 0, kertasDitangkap = 0;
   let jalan = false, jeda = false, masaLepas = 0, kiraMuncul = 0, masaMain = 0, goncang = 0, kilat = 0;
   let terbaik = +ls.get('kejar.terbaik') || 0;
-  const kekunci = { kiri: false, kanan: false };
+  const kekunci = { kiri: false, kanan: false, atas: false, bawah: false };
   $('terbaik').textContent = terbaik;
 
   /* ---------- Papan markah (hanya versi Apps Script, log masuk UTHM) ---------- */
@@ -331,6 +334,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     barang = []; teksTerapung = []; skor = 0; nyawa = 3; rentetan = 0; kertasDitangkap = 0;
     masaMain = 0; kiraMuncul = 0; goncang = 0; kilat = 0;
     pemain.x = pemain.sasaran = W / 2;
+    pemain.y = pemain.sasaranY = pemain.yBawah;
     kemasHud();
     $('skrin-mula').hidden = $('skrin-tamat').hidden = $('skrin-jeda').hidden = true;
     jalan = true; jeda = false; masaLepas = performance.now();
@@ -360,18 +364,19 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
 
   function kemasHud() {
     $('skor').textContent = skor;
-    [...$('nyawa').children].forEach((el, i) => el.classList.toggle('hilang', i >= nyawa));
+    $('nyawa').innerHTML = Array.from({ length: Math.max(3, nyawa) }, (_, i) => '<i' + (i >= nyawa ? ' class="hilang"' : '') + '></i>').join('');
     $('nyawa').setAttribute('aria-label', nyawa + ' nyawa');
   }
 
   function muncul() {
     const t = tahap(), r = Math.random();
     const kopi = .12 + .14 * t, fail = .07;
-    const jenis = r < kopi ? 'kopi' : r < kopi + fail ? 'fail' : 'kertas';
-    const lebar = jenis === 'fail' ? 30 : 24;
+    const hati = nyawa < NYAWA_MAKS ? .025 : 0;     // item nyawa jarang muncul, hanya bila nyawa belum penuh
+    const jenis = r < kopi ? 'kopi' : r < kopi + fail ? 'fail' : r < kopi + fail + hati ? 'nyawa' : 'kertas';
+    const lebar = jenis === 'fail' ? 30 : jenis === 'nyawa' ? 26 : 24;
     barang.push({
       jenis, x: 18 + Math.random() * (W - 36), y: -30, w: lebar, h: 30,
-      vy: (110 + 170 * t) * (jenis === 'fail' ? 1.15 : 1) * (.85 + Math.random() * .3),
+      vy: (110 + 170 * t) * (jenis === 'fail' ? 1.15 : jenis === 'nyawa' ? 1.25 : 1) * (.85 + Math.random() * .3),
       vx: jenis === 'kertas' ? (Math.random() - .5) * 30 : 0,
       putar: (Math.random() - .5) * .5, vputar: (Math.random() - .5) * 1.6, ayun: Math.random() * 6
     });
@@ -387,6 +392,11 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     if (kekunci.kanan) pemain.sasaran += laju * dt;
     pemain.sasaran = Math.max(pemain.w / 2 + 4, Math.min(W - pemain.w / 2 - 4, pemain.sasaran));
     pemain.x += (pemain.sasaran - pemain.x) * Math.min(1, dt * 18);
+    // W / S: naik turun dalam 40% bawah padang
+    if (kekunci.atas) pemain.sasaranY -= laju * .8 * dt;
+    if (kekunci.bawah) pemain.sasaranY += laju * .8 * dt;
+    pemain.sasaranY = Math.max(pemain.yBawah - ketinggian * .4, Math.min(pemain.yBawah, pemain.sasaranY));
+    pemain.y += (pemain.sasaranY - pemain.y) * Math.min(1, dt * 18);
 
     // Kemunculan
     kiraMuncul -= dt;
@@ -403,7 +413,10 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
       const bawah = b.y + b.h / 2;
       if (bawah >= atas && b.y < pemain.y + 4 && Math.abs(b.x - pemain.x) < pemain.w / 2 + b.w / 2 - 4) {
         barang.splice(i, 1);
-        if (b.jenis === 'kopi') {
+        if (b.jenis === 'nyawa') {
+          nyawa = Math.min(NYAWA_MAKS, nyawa + 1);
+          apung(b.x, atas - 10, '+1 nyawa', '#e5486b'); bip(660, .08, 'triangle'); setTimeout(() => bip(990, .12, 'triangle'), 80);
+        } else if (b.jenis === 'kopi') {
           nyawa--; rentetan = 0; goncang = kurangGerak ? 0 : .3; kilat = .35;
           apung(b.x, atas - 10, 'Tumpah!', warna.bahaya); bip(160, .25, 'square', .05);
         } else {
@@ -470,6 +483,14 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     cx.fillStyle = '#5c3a24'; cx.fillRect(-10, -10, 20, 4);
     cx.restore();
   }
+  function lukisNyawa(b) {
+    cx.save(); cx.translate(b.x, b.y);
+    const s = 1 + Math.sin(b.ayun * 2) * .08; cx.scale(s, s);
+    cx.fillStyle = '#e5486b';
+    cx.beginPath(); cx.moveTo(0, 11); cx.bezierCurveTo(-17, 0, -12, -15, 0, -6); cx.bezierCurveTo(12, -15, 17, 0, 0, 11); cx.fill();
+    cx.fillStyle = 'rgba(255,255,255,.5)'; cx.beginPath(); cx.arc(-5.5, -5, 2.5, 0, Math.PI * 2); cx.fill();
+    cx.restore();
+  }
   function lukisPemain() {
     const { x, y, w, h } = pemain;
     cx.fillStyle = 'rgba(0,0,0,.12)'; bulat(x - w / 2 + 3, y - h / 2 + 5, w, h, 7); cx.fill();
@@ -491,7 +512,7 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     cx.fillStyle = warna.garis; cx.fillRect(0, ketinggian - 10, W, 10);
     if (kilat > 0) { cx.fillStyle = warna.bahaya; cx.globalAlpha = kilat * .5; cx.fillRect(0, ketinggian - 10, W, 10); cx.globalAlpha = 1; }
 
-    barang.forEach(b => b.jenis === 'kertas' ? lukisKertas(b) : b.jenis === 'fail' ? lukisFail(b) : lukisKopi(b));
+    barang.forEach(b => b.jenis === 'kertas' ? lukisKertas(b) : b.jenis === 'fail' ? lukisFail(b) : b.jenis === 'nyawa' ? lukisNyawa(b) : lukisKopi(b));
     lukisPemain();
 
     cx.textAlign = 'center'; cx.textBaseline = 'middle';
@@ -522,6 +543,8 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     const k = e.key.toLowerCase();
     if (k === 'arrowleft' || k === 'a') { kekunci.kiri = true; e.preventDefault(); }
     else if (k === 'arrowright' || k === 'd') { kekunci.kanan = true; e.preventDefault(); }
+    else if (k === 'arrowup' || k === 'w') { kekunci.atas = true; e.preventDefault(); }
+    else if (k === 'arrowdown' || k === 's') { kekunci.bawah = true; e.preventDefault(); }
     else if (k === 'p' || k === 'escape') setJeda(!jeda);
     else if ((k === ' ' || k === 'enter') && !jalan && document.activeElement.tagName !== 'BUTTON') { e.preventDefault(); mula(); }
   });
@@ -529,9 +552,11 @@ kbd { font: 700 11.5px/1 "Plus Jakarta Sans", sans-serif; border: 1px solid var(
     const k = e.key.toLowerCase();
     if (k === 'arrowleft' || k === 'a') kekunci.kiri = false;
     if (k === 'arrowright' || k === 'd') kekunci.kanan = false;
+    if (k === 'arrowup' || k === 'w') kekunci.atas = false;
+    if (k === 'arrowdown' || k === 's') kekunci.bawah = false;
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden && jalan && !jeda) setJeda(true); });
-  addEventListener('blur', () => { kekunci.kiri = kekunci.kanan = false; });
+  addEventListener('blur', () => { kekunci.kiri = kekunci.kanan = kekunci.atas = kekunci.bawah = false; });
   $('btn-mula').addEventListener('click', mula);
   $('btn-lagi').addEventListener('click', mula);
   $('btn-sambung').addEventListener('click', () => setJeda(false));
