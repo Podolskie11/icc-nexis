@@ -4,13 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>e-TemplateGambar · ICC NEXIS</title>
-<meta name="description" content="e-TemplateGambar — masukkan banyak gambar ke dalam frame rasmi UTHM sekali gus.">
+<meta name="description" content="e-TemplateGambar — masukkan banyak gambar ke dalam frame rasmi ICC sekali gus.">
 <meta name="theme-color" content="#14213d">
 <link rel="icon" href="../icons/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="uthm-assets.js"></script>
 <script>
   // Ikut tema yang dipilih di ICC NEXIS (disimpan pada peranti yang sama)
   try { const t = localStorage.getItem('tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
@@ -142,7 +141,7 @@ footer a { color: inherit; }
       <div class="lencana"><svg class="ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="8" rx="1"/><path d="M7 19h10"/></svg></div>
       <div>
         <h1>e-TemplateGambar</h1>
-        <p>Masukkan banyak gambar ke dalam frame rasmi UTHM sekali gus. Semua diproses dalam pelayar anda, tiada gambar dimuat naik ke mana-mana.</p>
+        <p>Masukkan banyak gambar ke dalam frame rasmi ICC sekali gus. Semua diproses dalam pelayar anda, tiada gambar dimuat naik ke mana-mana.</p>
       </div>
     </div>
   </div>
@@ -185,7 +184,7 @@ footer a { color: inherit; }
   <!-- LANGKAH 3: FRAME (lanjutan) -->
   <details class="kad lanjutan" id="kad-frame">
     <summary>Tetapan frame (lanjutan)</summary>
-    <p class="petunjuk">Frame rasmi UTHM sudah dimuatkan. Tukar hanya jika anda mahu guna frame lain: PNG dengan bahagian tengah <b>lutsinar</b> (Canva → Muat turun → PNG → <i>Transparent background</i>).</p>
+    <p class="petunjuk">Frame rasmi ICC sudah dimuatkan. Tukar hanya jika anda mahu guna frame lain: PNG dengan bahagian tengah <b>lutsinar</b> (Canva → Muat turun → PNG → <i>Transparent background</i>).</p>
     <div class="baris">
       <div class="pratonton">
         <label class="zon" id="zon-frame" hidden>
@@ -203,7 +202,7 @@ footer a { color: inherit; }
         <div class="butang-baris">
           <button class="btn hantu" id="btn-auto" type="button">Kesan automatik</button>
           <button class="btn hantu" id="btn-frame-lain" type="button">Guna frame lain</button>
-          <button class="btn hantu" id="btn-frame-uthm" type="button">Frame UTHM</button>
+          <button class="btn hantu" id="btn-frame-uthm" type="button">Frame ICC</button>
         </div>
       </div>
     </div>
@@ -284,12 +283,12 @@ footer a { color: inherit; }
     frame = await muatImej(dataUrl);
     kawasan = kawasanSimpan || kesanKawasan(frame) || { l: 0, t: 0, r: 100, b: 100 };
     if (simpan) { ls.set('etg.frame', dataUrl); ls.set('etg.kawasan', JSON.stringify(kawasan)); }
-    $('lencana-frame').textContent = (simpan ? 'Frame sendiri · ' : 'Frame UTHM · ') + frame.width + '×' + frame.height;
+    $('lencana-frame').textContent = (simpan ? 'Frame sendiri · ' : 'Frame ICC · ') + frame.width + '×' + frame.height;
     $('lencana-frame').classList.add('ok');
     $('zon-frame').hidden = true;
     segerakGelangsar(); lukisFrame(); paparSemua();
   }
-  const guraFrameUthm = () => { ls.set('etg.frame', null); ls.set('etg.kawasan', null); return setFrame(window.UTHM_ASSETS.frame, false); };
+  const guraFrameIcc = () => { ls.set('etg.frame', null); ls.set('etg.kawasan', null); return setFrame('frame-icc.png', false); };
 
   zonSeret($('zon-frame'), $('input-frame'), async f => { if (f[0]) setFrame(await keDataURL(f[0]), true); });
   [['aL', 'l'], ['aT', 't'], ['aR', 'r'], ['aB', 'b']].forEach(([id, k]) => {
@@ -309,7 +308,7 @@ footer a { color: inherit; }
     segerakGelangsar(); lukisFrame(); paparSemua();
   });
   $('btn-frame-lain').addEventListener('click', () => { $('zon-frame').hidden = false; $('input-frame').click(); });
-  $('btn-frame-uthm').addEventListener('click', guraFrameUthm);
+  $('btn-frame-uthm').addEventListener('click', guraFrameIcc);
   ['fmt', 'muat'].forEach(id => {
     const s = ls.get('etg.' + id); if (s) $(id).value = s;
     $(id).addEventListener('change', () => { ls.set('etg.' + id, $(id).value); paparSemua(); });
@@ -331,8 +330,8 @@ footer a { color: inherit; }
     x.drawImage(frame, 0, 0);
     return c;
   }
-  const keBlob = c => new Promise(ok => c.toBlob(ok, $('fmt').value === 'jpg' ? 'image/jpeg' : 'image/png', 0.92));
-  const namaKeluar = n => n.replace(/\.[^.]+$/, '') + '_UTHM.' + $('fmt').value;
+  const keBlob = c => new Promise(ok => c.toBlob(ok, $('fmt').value === 'jpg' ? 'image/jpeg' : 'image/png', 0.95));
+  const namaKeluar = n => n.replace(/\.[^.]+$/, '') + '_ICC.' + $('fmt').value;
   function muatTurun(blob, nama) {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nama; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
@@ -384,8 +383,8 @@ footer a { color: inherit; }
   const frameSimpan = ls.get('etg.frame');
   if (frameSimpan) {
     let k = null; try { k = JSON.parse(ls.get('etg.kawasan')); } catch (e) {}
-    setFrame(frameSimpan, true, k).catch(guraFrameUthm);
-  } else guraFrameUthm();
+    setFrame(frameSimpan, true, k).catch(guraFrameIcc);
+  } else guraFrameIcc();
 })();
 </script>
 </body>

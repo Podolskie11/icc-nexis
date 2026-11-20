@@ -64,6 +64,6 @@ Dalam `index.html`, salin satu blok `{ nama, keterangan, url, warna, ikon }` dal
 
 ## e-TemplateGambar
 
-Folder `e-templategambar/` ialah alat untuk memasukkan banyak gambar ke dalam frame rasmi UTHM sekali gus (muat turun satu-satu atau ZIP). Semua diproses dalam pelayar, tiada gambar dimuat naik ke mana-mana.
+Folder `e-templategambar/` ialah alat untuk memasukkan banyak gambar ke dalam frame rasmi ICC sekali gus (muat turun satu-satu atau ZIP). Semua diproses dalam pelayar, tiada gambar dimuat naik ke mana-mana.
 
-- **Tukar frame:** eksport frame baharu dari Canva sebagai PNG dengan *Transparent background* (bahagian gambar dikosongkan), kemudian jana semula `e-templategambar/uthm-assets.js` daripadanya. Pengguna juga boleh pilih frame sendiri melalui **Tetapan frame (lanjutan)**.
+- **Tukar frame:** eksport frame baharu dari Canva sebagai PNG dengan *Transparent background* (bahagian gambar dikosongkan), kemudian simpan sebagai `e-templategambar/frame-icc.png` (saiz 3840×2160). Pengguna juga boleh pilih frame sendiri melalui **Tetapan frame (lanjutan)**.
