@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358 164" role="img" aria-label="ICC NEXIS"><defs><mask id="k1" maskUnits="userSpaceOnUse" x="200" y="180" width="370" height="180">
+<rect x="200" y="180" width="370" height="180" fill="#fff"/>
+<path d="M329.06 322.4A66.5 66.5 0 0 0 436.5 270" fill="none" stroke="#000" stroke-width="32"/></mask></defs>
+<g transform="translate(-204 -188)">
+<g fill="none" stroke-width="22">
+<circle cx="479" cy="270" r="66.5" stroke="#169b83" mask="url(#k1)"/>
+<path d="M334.02 222.98A66.5 66.5 0 1 0 318.22 328.72" stroke="#14355f"/>
+<path d="M329.06 322.4A66.5 66.5 0 0 0 436.5 270" stroke="#14355f"/>
+<path d="M426.4 234.76A66.5 66.5 0 1 0 317.6 310.94" stroke="#169b83" stroke-linecap="round"/>
+<path d="M334.02 222.98L368 255" stroke="#14355f" stroke-linecap="round"/>
+<path d="M355 293L358.45 335.49" stroke="#14355f"/>
+<path d="M426.4 234.76L396 287" stroke="#169b83" stroke-linecap="round"/>
+<path d="M269 232V304" stroke="#14355f" stroke-width="20"/>
+</g>
+<path d="M426 310V232H448L492 264V232H514V310H492L448 278V310Z" fill="#14355f"/>
+<circle cx="368" cy="255" r="15" fill="#14355f"/>
+<circle cx="355" cy="293" r="14" fill="#14355f"/>
+<circle cx="396" cy="287" r="14.5" fill="#169b83"/>
+</g></svg>

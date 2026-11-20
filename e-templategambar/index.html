@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>e-TemplateGambar · ICC NEXIS</title>
 <meta name="description" content="e-TemplateGambar — masukkan banyak gambar ke dalam frame rasmi ICC sekali gus.">
-<meta name="theme-color" content="#14213d">
+<meta name="theme-color" content="#0f2a4d">
 <link rel="icon" href="../icons/logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
   // Ikut tema yang dipilih di ICC NEXIS (disimpan pada peranti yang sama)
@@ -16,7 +16,7 @@
 </script>
 <style>
 :root {
-  --navy: #14213d; --aksen: #2dd4bf; --warna: #8b5cf6;
+  --navy: #0f2a4d; --aksen: #3cc9a8; --warna: #8b5cf6;
   --latar: #f4f6fb; --permukaan: #ffffff; --permukaan-2: #f7f8fc;
   --teks: #141a2b; --teks-2: #5b6478; --garis: #e3e7f0; --utama: #3454d1;
   --bayang: 0 1px 2px rgba(20,33,61,.06), 0 6px 22px rgba(20,33,61,.08);
@@ -47,19 +47,19 @@ button, select { font: inherit; }
 .ikon { width: 20px; height: 20px; flex: none; }
 
 /* ---------- Kepala ---------- */
-.kepala { background: var(--navy); color: #fff; padding: calc(env(safe-area-inset-top) + 20px) 16px 84px; position: relative; overflow: hidden; isolation: isolate; }
+.kepala { background: linear-gradient(160deg, var(--navy) 0%, #12345e 100%); color: #fff; padding: calc(env(safe-area-inset-top) + 20px) 16px 84px; position: relative; overflow: hidden; isolation: isolate; }
 .kepala::before { content: ""; position: absolute; inset: 0; z-index: -1;
   background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1.5px); background-size: 22px 22px;
   mask-image: linear-gradient(180deg, #000 30%, transparent 100%); -webkit-mask-image: linear-gradient(180deg, #000 30%, transparent 100%); }
 .gumpal { position: absolute; border-radius: 50%; filter: blur(40px); z-index: -1; pointer-events: none; }
-.gumpal.a { width: 300px; height: 300px; right: -90px; top: -110px; background: rgba(139,92,246,.35); }
-.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(11,149,240,.40); }
+.gumpal.a { width: 300px; height: 300px; right: -90px; top: -110px; background: rgba(139,92,246,.22); }
+.gumpal.b { width: 260px; height: 260px; left: -100px; bottom: -120px; background: rgba(22,155,131,.28); }
 .kepala-dalam { max-width: 960px; margin: 0 auto; }
 .bar-atas { display: flex; align-items: center; gap: 10px; margin-bottom: 26px; }
 .balik { display: inline-flex; align-items: center; gap: 8px; color: #e8ecf6; text-decoration: none; font-weight: 700; font-size: 13px;
   height: 36px; padding: 0 14px 0 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); margin-right: auto; }
 .balik:hover { background: rgba(255,255,255,.16); }
-.balik img { width: 22px; height: 22px; border-radius: 6px; }
+.balik img { height: 16px; width: auto; }
 .cip { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; cursor: pointer;
   background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #e8ecf6; }
 .cip:hover { background: rgba(255,255,255,.16); }
@@ -67,7 +67,7 @@ button, select { font: inherit; }
 .tajuk { display: flex; align-items: center; gap: 14px; }
 .tajuk .lencana { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(139,92,246,.22); color: #c4b5fd; flex: none; }
 .tajuk .lencana .ikon { width: 28px; height: 28px; }
-.kepala h1 { font-size: 26px; font-weight: 800; letter-spacing: -.4px; }
+.kepala h1 { font: 800 26px/1.2 "Montserrat", sans-serif; letter-spacing: -.4px; }
 .kepala p { color: #b9c3dd; margin-top: 4px; font-size: 14px; }
 
 /* ---------- Kandungan ---------- */
@@ -134,7 +134,7 @@ footer a { color: inherit; }
   <span class="gumpal a"></span><span class="gumpal b"></span>
   <div class="kepala-dalam">
     <div class="bar-atas">
-      <a class="balik" href="../"><img src="../icons/logo.svg" alt="">ICC NEXIS</a>
+      <a class="balik" href="../"><img src="../icons/logo-putih.svg" alt="">ICC NEXIS</a>
       <button class="cip" id="btn-tema" type="button" aria-label="Tukar tema" title="Tukar tema cerah / gelap"></button>
     </div>
     <div class="tajuk">

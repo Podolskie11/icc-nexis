@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="ICC NEXIS">
-  <!-- Versi ikon app: latar penuh (telefon membundarkan sendiri), simbol dalam zon selamat 80% -->
-  <defs>
-    <linearGradient id="nexis-latar" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1e4fd6"/>
-      <stop offset=".55" stop-color="#0b95f0"/>
-      <stop offset="1" stop-color="#22c7a9"/>
-    </linearGradient>
-  </defs>
-  <rect width="100" height="100" fill="url(#nexis-latar)"/>
-  <g transform="translate(50 50) scale(.72) translate(-50 -50)">
-    <path d="M30 71V29l40 42V29" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/>
-    <g fill="#fff">
-      <circle cx="30" cy="71" r="7.5"/><circle cx="30" cy="29" r="7.5"/>
-      <circle cx="70" cy="71" r="7.5"/><circle cx="70" cy="29" r="7.5"/>
-    </g>
-    <circle cx="50" cy="50" r="7" fill="#ffd166" stroke="#fff" stroke-width="3"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ICC NEXIS"><rect width="512" height="512" rx="0" fill="#ffffff"/><g transform="translate(71.68 171.56) scale(1.03)"><defs><mask id="k3" maskUnits="userSpaceOnUse" x="200" y="180" width="370" height="180">
+<rect x="200" y="180" width="370" height="180" fill="#fff"/>
+<path d="M329.06 322.4A66.5 66.5 0 0 0 436.5 270" fill="none" stroke="#000" stroke-width="32"/></mask></defs>
+<g transform="translate(-204 -188)">
+<g fill="none" stroke-width="22">
+<circle cx="479" cy="270" r="66.5" stroke="#169b83" mask="url(#k3)"/>
+<path d="M334.02 222.98A66.5 66.5 0 1 0 318.22 328.72" stroke="#14355f"/>
+<path d="M329.06 322.4A66.5 66.5 0 0 0 436.5 270" stroke="#14355f"/>
+<path d="M426.4 234.76A66.5 66.5 0 1 0 317.6 310.94" stroke="#169b83" stroke-linecap="round"/>
+<path d="M334.02 222.98L368 255" stroke="#14355f" stroke-linecap="round"/>
+<path d="M355 293L358.45 335.49" stroke="#14355f"/>
+<path d="M426.4 234.76L396 287" stroke="#169b83" stroke-linecap="round"/>
+<path d="M269 232V304" stroke="#14355f" stroke-width="20"/>
+</g>
+<path d="M426 310V232H448L492 264V232H514V310H492L448 278V310Z" fill="#14355f"/>
+<circle cx="368" cy="255" r="15" fill="#14355f"/>
+<circle cx="355" cy="293" r="14" fill="#14355f"/>
+<circle cx="396" cy="287" r="14.5" fill="#169b83"/>
+</g></g></svg>

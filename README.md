@@ -24,7 +24,7 @@ Telefon / PC ──► ICC NEXIS (GitHub Pages)
 | `index.html` | Halaman portal. **Pautan sistem ditetapkan di sini** (`SISTEM` di bahagian atas). |
 | `manifest.webmanifest` | Maklumat aplikasi (nama, ikon, warna) untuk install |
 | `sw.js` | Service worker, supaya portal boleh di-install dan dibuka pantas |
-| `icons/` | Ikon aplikasi. `jana-ikon.js` menjana semula ikon jika perlu. |
+| `icons/` | Logo & ikon aplikasi: `logo-mark.svg` (logo warna), `logo-putih.svg` (untuk latar gelap), `logo.svg` / `logo-maskable.svg` (ikon app). `jana-logo.js` menjana semula fail SVG logo. |
 
 ---
 
