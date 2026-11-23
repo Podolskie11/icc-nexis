@@ -117,6 +117,12 @@ select { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--garis);
 .item { border: 1px solid var(--garis); border-radius: 14px; overflow: hidden; background: var(--permukaan-2); animation: naik .45s cubic-bezier(.16,1,.3,1) both; }
 @keyframes naik { from { opacity: 0; transform: translateY(6px); } }
 .item img { width: 100%; display: block; }
+.bingkai { position: relative; aspect-ratio: 16 / 9; background: var(--permukaan-2); cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+.bingkai img { height: 100%; object-fit: cover; pointer-events: none; }
+.item.memuat .bingkai { background: linear-gradient(90deg, var(--permukaan-2), var(--garis), var(--permukaan-2)); background-size: 200% 100%; animation: kilau 1.2s linear infinite; }
+@keyframes kilau { to { background-position: -200% 0; } }
+.tanda { position: absolute; left: 8px; top: 8px; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(15,42,77,.82); color: #fff; pointer-events: none; }
+.bingkai.asal::after { content: "Asal"; position: absolute; right: 8px; top: 8px; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #d23b3b; color: #fff; }
 .item .meta { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 8px 10px; }
 .item .meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--teks-2); font-size: 12.5px; }
 .item .meta .btn { min-height: 32px; padding: 0 10px; font-size: 12.5px; border-radius: 9px; white-space: nowrap; flex: none; }
@@ -173,6 +179,9 @@ html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) trans
       <label>Saiz gambar
         <select id="muat"><option value="cover">Penuh (potong tepi)</option><option value="contain">Muat semua (tiada potong)</option></select>
       </label>
+      <label>Tingkatkan kualiti
+        <select id="tingkat"><option value="tiada">Tiada</option><option value="sederhana" selected>Sederhana</option><option value="kuat">Kuat</option></select>
+      </label>
       <span class="ruang"></span>
       <button class="btn hantu" id="btn-kosong" type="button">Kosongkan</button>
       <button class="btn" id="btn-zip" type="button" disabled>
@@ -180,6 +189,7 @@ html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) trans
         <span id="teks-zip">Muat turun semua (ZIP)</span>
       </button>
     </div>
+    <p class="petunjuk" id="nota-banding" hidden>Kualiti gambar dipertingkat secara automatik (tajam, kontras, warna). Untuk gambar yang pecah / kecil, pilih <b>Kuat</b>. Tekan &amp; tahan mana-mana gambar untuk banding dengan asal.</p>
     <div id="grid" class="grid"></div>
     <div id="kosong" class="kosong">Gambar siap akan dipaparkan di sini.</div>
   </section>
@@ -312,23 +322,115 @@ html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) trans
   });
   $('btn-frame-lain').addEventListener('click', () => { $('zon-frame').hidden = false; $('input-frame').click(); });
   $('btn-frame-uthm').addEventListener('click', guraFrameIcc);
-  ['fmt', 'muat'].forEach(id => {
+  ['fmt', 'muat', 'tingkat'].forEach(id => {
     const s = ls.get('etg.' + id); if (s) $(id).value = s;
     $(id).addEventListener('change', () => { ls.set('etg.' + id, $(id).value); paparSemua(); });
   });
 
+  /* ---------- Tingkatkan kualiti (semua dalam pelayar, tiada muat naik) ----------
+     1. Lembutkan kesan "blok" JPEG pada gambar asal yang kecil
+     2. Besarkan berperingkat (2× setiap langkah) dengan pelicinan berkualiti tinggi
+     3. Tajamkan tepi (unsharp mask, abaikan bintik halus supaya hingar tidak naik)
+     4. Laraskan kecerahan / kontras automatik dan sedikit warna */
+  const TAHAP = {
+    tiada: null,
+    sederhana: { blok: .5, tajam: .8, jejari: 1.2, aras: .6, warna: .06 },
+    kuat: { blok: .8, tajam: 1.3, jejari: 1.6, aras: 1, warna: .12 }
+  };
+  function kaburKotak(src, w, h, r) {           // kabur kotak boleh dipisah, RGB sahaja
+    const tmp = new Uint8ClampedArray(src.length), out = new Uint8ClampedArray(src.length), n = 2 * r + 1;
+    for (let y = 0; y < h; y++) {
+      const row = y * w * 4;
+      for (let k = 0; k < 3; k++) {
+        let s = 0;
+        for (let i = -r; i <= r; i++) s += src[row + Math.min(w - 1, Math.max(0, i)) * 4 + k];
+        for (let i = 0; i < w; i++) {
+          tmp[row + i * 4 + k] = s / n;
+          s += src[row + Math.min(w - 1, i + r + 1) * 4 + k] - src[row + Math.max(0, i - r) * 4 + k];
+        }
+      }
+    }
+    for (let i = 0; i < w; i++) {
+      for (let k = 0; k < 3; k++) {
+        let s = 0;
+        for (let j = -r; j <= r; j++) s += tmp[(Math.min(h - 1, Math.max(0, j)) * w + i) * 4 + k];
+        for (let y = 0; y < h; y++) {
+          out[(y * w + i) * 4 + k] = s / n;
+          s += tmp[(Math.min(h - 1, y + r + 1) * w + i) * 4 + k] - tmp[(Math.max(0, y - r) * w + i) * 4 + k];
+        }
+      }
+    }
+    return out;
+  }
+  function tingkatkan(foto, tw, th, p) {
+    const besar = tw / foto.width;              // > 1 = gambar perlu dibesarkan
+    // 1. Gambar asal (lembutkan blok JPEG jika gambar kecil)
+    let c = document.createElement('canvas'); c.width = foto.width; c.height = foto.height;
+    let x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(foto, 0, 0);
+    if (besar > 1.2 && p.blok) {
+      const d = x.getImageData(0, 0, c.width, c.height), a = d.data, b = kaburKotak(a, c.width, c.height, 1), m = p.blok * .5;
+      for (let i = 0; i < a.length; i += 4) for (let k = 0; k < 3; k++) a[i + k] = a[i + k] * (1 - m) + b[i + k] * m;
+      // Tajamkan tepi pada saiz asal (tepi masih 1–2 piksel di sini, jadi kesannya lebih jelas selepas dibesarkan)
+      const b2 = kaburKotak(a, c.width, c.height, 1), q = p.tajam * .6;
+      for (let i = 0; i < a.length; i += 4) {
+        const dr = a[i] - b2[i], dg = a[i + 1] - b2[i + 1], db = a[i + 2] - b2[i + 2];
+        if (Math.abs(dr) + Math.abs(dg) + Math.abs(db) > 15) { a[i] += dr * q; a[i + 1] += dg * q; a[i + 2] += db * q; }
+      }
+      x.putImageData(d, 0, 0);
+    }
+    // 2. Ubah saiz berperingkat
+    while (c.width * 2 < tw || c.width / 2 > tw) {
+      const naik = c.width < tw, n = document.createElement('canvas');
+      n.width = Math.round(naik ? c.width * 2 : c.width / 2); n.height = Math.round(naik ? c.height * 2 : c.height / 2);
+      const nx = n.getContext('2d'); nx.imageSmoothingQuality = 'high'; nx.drawImage(c, 0, 0, n.width, n.height); c = n;
+    }
+    const o = document.createElement('canvas'); o.width = tw; o.height = th;
+    x = o.getContext('2d', { willReadFrequently: true }); x.imageSmoothingQuality = 'high'; x.drawImage(c, 0, 0, tw, th);
+    // 3 + 4. Tajamkan + aras automatik + warna, dalam satu laluan
+    const d = x.getImageData(0, 0, tw, th), a = d.data;
+    const r = Math.max(1, Math.min(6, Math.round(p.jejari * Math.max(1, besar) * .6))), kabur = kaburKotak(a, tw, th, r);
+    const amaun = besar > 1 ? p.tajam : p.tajam * .5, ambang = 3;
+    const hist = new Uint32Array(256); let bil = 0;
+    for (let i = 0; i < a.length; i += 16) { hist[(a[i] * 77 + a[i + 1] * 150 + a[i + 2] * 29) >> 8]++; bil++; }
+    let lo = 0, hi = 255, s = 0;
+    while (lo < 255 && (s += hist[lo]) < bil * .004) lo++;
+    s = 0; while (hi > 0 && (s += hist[hi]) < bil * .004) hi--;
+    lo = Math.min(lo, 40) * p.aras; hi = 255 - Math.min(255 - hi, 40) * p.aras;   // regang hanya sedikit
+    const regang = 255 / Math.max(1, hi - lo), tepu = 1 + p.warna;
+    for (let i = 0; i < a.length; i += 4) {
+      let R = a[i], G = a[i + 1], B = a[i + 2];
+      const dr = R - kabur[i], dg = G - kabur[i + 1], db = B - kabur[i + 2];
+      if (Math.abs(dr) + Math.abs(dg) + Math.abs(db) > ambang * 3) { R += dr * amaun; G += dg * amaun; B += db * amaun; }
+      R = (R - lo) * regang; G = (G - lo) * regang; B = (B - lo) * regang;
+      const L = R * .299 + G * .587 + B * .114;
+      a[i] = L + (R - L) * tepu; a[i + 1] = L + (G - L) * tepu; a[i + 2] = L + (B - L) * tepu;
+    }
+    x.putImageData(d, 0, 0);
+    return o;
+  }
+
   /* ---------- Gabung gambar + frame ---------- */
-  function gabung(foto) {
+  function ukur(foto) {
     const W = frame.width, H = frame.height;
-    const c = document.createElement('canvas'); c.width = W; c.height = H;
-    const x = c.getContext('2d'); x.imageSmoothingQuality = 'high';
     const ax = kawasan.l / 100 * W, ay = kawasan.t / 100 * H, aw = (kawasan.r - kawasan.l) / 100 * W, ah = (kawasan.b - kawasan.t) / 100 * H;
     const penuh = $('muat').value === 'cover';
     const sk = penuh ? Math.max(aw / foto.width, ah / foto.height) : Math.min(aw / foto.width, ah / foto.height);
-    const dw = foto.width * sk, dh = foto.height * sk;
-    x.fillStyle = '#ffffff'; x.fillRect(0, 0, W, H);
-    x.save(); x.beginPath(); x.rect(ax, ay, aw, ah); x.clip();
-    x.drawImage(foto, ax + (aw - dw) / 2, ay + (ah - dh) / 2, dw, dh);
+    return { W, H, ax, ay, aw, ah, sk, dw: foto.width * sk, dh: foto.height * sk };
+  }
+  function gabung(g, asal) {
+    const foto = g.img, u = ukur(foto);
+    const c = document.createElement('canvas'); c.width = u.W; c.height = u.H;
+    const x = c.getContext('2d'); x.imageSmoothingQuality = 'high';
+    let sumber = foto;
+    const tahap = $('tingkat').value, p = !asal && TAHAP[tahap];
+    if (p) {
+      const tw = Math.round(u.dw), th = Math.round(u.dh), kunci = tw + 'x' + th + ':' + tahap;
+      if (g.kunci !== kunci) { g.hasil = tingkatkan(foto, tw, th, p); g.kunci = kunci; }
+      sumber = g.hasil;
+    }
+    x.fillStyle = '#ffffff'; x.fillRect(0, 0, u.W, u.H);
+    x.save(); x.beginPath(); x.rect(u.ax, u.ay, u.aw, u.ah); x.clip();
+    x.drawImage(sumber, u.ax + (u.aw - u.dw) / 2, u.ay + (u.ah - u.dh) / 2, u.dw, u.dh);
     x.restore();
     x.drawImage(frame, 0, 0);
     return c;
@@ -340,25 +442,49 @@ html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) trans
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   }
 
-  function paparSemua() {
+  let giliran = 0;                            // batalkan paparan lama bila tetapan berubah
+  async function paparSemua() {
+    const saya = ++giliran;
     const grid = $('grid'); grid.innerHTML = '';
     $('lencana-gambar').textContent = gambar.length + ' gambar';
     $('lencana-gambar').classList.toggle('ok', gambar.length > 0);
     $('kosong').hidden = gambar.length > 0 && !!frame;
     $('btn-zip').disabled = !(frame && gambar.length);
+    $('nota-banding').hidden = !(frame && gambar.length && TAHAP[$('tingkat').value]);
     if (!frame) return;
-    gambar.forEach((g, i) => {
-      const el = document.createElement('div'); el.className = 'item'; el.style.animationDelay = Math.min(i, 12) * 40 + 'ms';
-      const im = document.createElement('img'); im.src = gabung(g.img).toDataURL('image/jpeg', 0.7); im.alt = g.nama;
+    for (let i = 0; i < gambar.length; i++) {
+      const g = gambar[i];
+      const el = document.createElement('div'); el.className = 'item memuat';
       const meta = document.createElement('div'); meta.className = 'meta';
       const nm = document.createElement('span'); nm.textContent = g.nama; nm.title = g.nama;
       const dl = document.createElement('button'); dl.className = 'btn'; dl.type = 'button'; dl.textContent = 'Muat turun';
-      dl.onclick = async () => muatTurun(await keBlob(gabung(g.img)), namaKeluar(g.nama));
+      dl.onclick = async () => muatTurun(await keBlob(gabung(g)), namaKeluar(g.nama));
       const bu = document.createElement('button'); bu.className = 'btn hantu'; bu.type = 'button'; bu.innerHTML = svg('<path d="M18 6 6 18M6 6l12 12"/>'); bu.title = 'Buang'; bu.setAttribute('aria-label', 'Buang ' + g.nama);
       bu.onclick = () => { gambar.splice(i, 1); paparSemua(); };
       const bt = document.createElement('div'); bt.style.cssText = 'display:flex;gap:6px';
-      bt.append(dl, bu); meta.append(nm, bt); el.append(im, meta); grid.append(el);
-    });
+      const bingkai = document.createElement('div'); bingkai.className = 'bingkai'; bingkai.style.aspectRatio = frame.width + ' / ' + frame.height;
+      const im = document.createElement('img'); im.alt = g.nama;
+      bingkai.append(im);
+      let t = null;
+      if (ukur(g.img).sk > 1.5) {                // gambar asal jauh lebih kecil daripada ruang frame
+        t = document.createElement('span'); t.className = 'tanda';
+        t.textContent = TAHAP[$('tingkat').value] ? 'Resolusi rendah · dipertingkat' : 'Resolusi rendah';
+        bingkai.append(t);
+      }
+      bt.append(dl, bu); meta.append(nm, bt); el.append(bingkai, meta); grid.append(el);
+      await new Promise(r => setTimeout(r, 0));   // beri pelayar bernafas antara gambar
+      if (saya !== giliran) return;
+      im.src = gabung(g).toDataURL('image/jpeg', 0.75);
+      el.classList.remove('memuat');
+      // Tekan & tahan untuk banding dengan gambar asal (tanpa peningkatan)
+      if (TAHAP[$('tingkat').value]) {
+        let asal = null; const baru = im.src;
+        const tunjuk = e => { e.preventDefault(); asal = asal || gabung(g, true).toDataURL('image/jpeg', 0.75); im.src = asal; bingkai.classList.add('asal'); };
+        const balik = () => { im.src = baru; bingkai.classList.remove('asal'); };
+        bingkai.addEventListener('pointerdown', tunjuk);
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => bingkai.addEventListener(ev, balik));
+      }
+    }
   }
 
   zonSeret($('zon-gambar'), $('input-gambar'), async fail => {
@@ -375,7 +501,8 @@ html { scrollbar-color: color-mix(in srgb, var(--teks-2) 45%, transparent) trans
       let n = namaKeluar(gambar[i].nama), k = 1;
       while (guna.has(n)) n = namaKeluar(gambar[i].nama).replace(/(\.\w+)$/, '_' + (k++) + '$1');
       guna.add(n);
-      zip.file(n, await keBlob(gabung(gambar[i].img)));
+      await new Promise(r => setTimeout(r, 0));
+      zip.file(n, await keBlob(gabung(gambar[i])));
     }
     teks.textContent = 'Memampatkan…';
     muatTurun(await zip.generateAsync({ type: 'blob' }), 'e-TemplateGambar.zip');
